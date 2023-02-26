@@ -2,14 +2,11 @@ import http from "./http-common";
 
 
 
-export default async function getPincodeDataByCode(pincode) {
+export default async function pincodeFindById(id) {
 
-  if (pincode) {
+  if (id) {
     try {
-      const res = await http.get(`/pincodes/${pincode}`);
-
-      //console.log('res.data==> ', res.data);  
-      //console.log('res.status', res.status);  
+      const res = await http.get(`/pincode/${id}`);
       const ROWS = res.data.pincode;
       const result = {
         data: ROWS,

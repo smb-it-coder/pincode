@@ -1,9 +1,11 @@
 import axios from "axios";
+import {API_PATH , API_TOKEN } from './consta';
 
 const devUrl =  axios.create({
-    baseURL: "https://api.postalpincode.in/",
+    baseURL: API_PATH,
     headers: {
-      "Content-type": "application/json"
+      "Content-type": "application/json",
+      Authorization: `Bearer ${API_TOKEN}`
     }
   });
 

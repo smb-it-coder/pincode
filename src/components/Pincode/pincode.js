@@ -1,8 +1,11 @@
-import React , { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import getPincodeDataByCode from '../../Services/pincodeByCode.service';
-import getPincodeDataByCity from '../../Services/pincodeByCity.service';
+//import getPincodeDataByCity from '../../Services/pincodeByCity.service';
+import getPincodeByLocation from '../../Services/pincodeByLocation.service';
+
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Table from 'react-bootstrap/Table';
 
 
 class DataForPincode extends React.Component {
@@ -21,10 +24,10 @@ class DataForPincode extends React.Component {
 
     componentDidMount() {
 
-        if (!isNaN(this.queryParams.get("q"))){
+        if (!isNaN(this.queryParams.get("q"))) {
             this.pincodeRead(this.queryParams.get("q"));
         } else {
-            this.pincodeCityRead(this.queryParams.get("q"));
+            this.pincodeLocationRead(this.queryParams.get("q"));
         }
 
     }
@@ -34,9 +37,9 @@ class DataForPincode extends React.Component {
         getPincodeDataByCode(pincode)
             .then(res => {
                 const pincodeList = {
-                    Message: res.data[0].Message,
-                    PostOffice: res.data[0].PostOffice,
-                    Status: res.data[0].Status
+                    Count: res.count,
+                    PostOffice: res.data,
+                    Status: res.status
                 };
                 this.postOffices = pincodeList;
                 this.setState({ pincodes: pincodeList, isFlag: true });
@@ -44,26 +47,28 @@ class DataForPincode extends React.Component {
             });
     }
 
-    pincodeCityRead(city) {
-        getPincodeDataByCity(city)
+    pincodeLocationRead(location) {
+        getPincodeByLocation(location)
             .then(res => {
+
+                console.log('getPincodeByLocation === ', res.data);
                 const pincodeList = {
-                    Message: res.data[0].Message,
-                    PostOffice: res.data[0].PostOffice,
-                    Status: res.data[0].Status
+                    Count: res.count,
+                    PostOffice: res.data,
+                    Status: res.status
                 };
 
-                this.setState({ pincodes: pincodeList, isFlag: true , isCity: true});
+                this.setState({ pincodes: pincodeList, isFlag: true, isCity: true });
 
             });
     }
 
     render() {
-        const PostOffice = this.state.pincodes.PostOffice;
+
         const isFlag = this.state.isFlag;
         const Status = this.state.pincodes.Status;
-        const Message = this.state.pincodes.Message;
-        
+        const Message = '';
+
 
         if (!isFlag) {
             return (
@@ -73,13 +78,13 @@ class DataForPincode extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
-                        <div className="row">
-                        <Breadcrumb>
-                                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                                <Breadcrumb.Item active> Search </Breadcrumb.Item>
-                            </Breadcrumb>
-                              <hr/>
-                        </div>
+                            <div className="row">
+                                <Breadcrumb>
+                                    <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                                    <Breadcrumb.Item active> Search </Breadcrumb.Item>
+                                </Breadcrumb>
+                                <hr />
+                            </div>
 
 
                             <h3>Found result for {this.state.keyword}  </h3>
@@ -95,7 +100,8 @@ class DataForPincode extends React.Component {
         }
 
         if (isFlag && Status !== 'Error') {
-
+            const PostOffice = this.state.pincodes.PostOffice;
+            console.log('render () -> PostOffice', this.state.pincodes);
             return (
                 <div className="container-fluid bg-grey">
                     <div className="row">
@@ -103,45 +109,66 @@ class DataForPincode extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
-                        <div className="row">
-                        <Breadcrumb>
-                                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                                <Breadcrumb.Item active> Search </Breadcrumb.Item>
-                            </Breadcrumb>
-                              <hr/>
-                        </div>
+                            <div className="row">
+                                <Breadcrumb>
+                                    <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                                    <Breadcrumb.Item active> Search </Breadcrumb.Item>
+                                </Breadcrumb>
+                                <hr />
+                            </div>
 
                             <h3>Found result for <strong>{this.state.keyword}</strong>  </h3>
-                            <p> 
+                            <p>
                                 <strong>
                                     {(() => {
                                         if (this.state.isCity) {
-                                                return (
-                                                    <Link>{this.state.keyword}</Link> 
-                                                )
-                                        }  else {
-                                                return (
-                                                    <Link to={`/pincode/${this.state.keyword}`}><strong>{this.state.keyword}</strong></Link> 
-                                                )
+                                            return (
+                                                <Link>{this.state.keyword}</Link>
+                                            )
+                                        } else {
+                                            return (
+                                                <Link to={`/pincode/${this.state.keyword}`}><strong>{this.state.keyword}</strong></Link>
+                                            )
                                         }
                                     })()}
                                 </strong> : - View all pincode result for this postal code.
-                             </p>
+                            </p>
                             <div className="row">
-                                <h4>Result found for query <strong>{this.state.keyword}</strong> </h4>
+                                <h4><strong>{PostOffice[0].office} <strong>
+                                                        <a href={'/pincode/' + PostOffice[0].pincode}> {PostOffice[0].pincode}</a>
+                                                    </strong></strong> </h4>
                             </div>
+                            <div className="row">&nbsp;</div>
+
                             <div className="row">
-                                {PostOffice.map((pincode) => (
-                                    <ol key={pincode.Pincode} >
-                                        {pincode.Name},
-                                        {pincode.District},
-                                        {pincode.State} ,
-                                        {pincode.Country} ,
-                                        {pincode.Pincode}
-                                    </ol>
-                                ))
-                                }
+
+
+
+                                <Table responsive="sm">
+                                    <thead>
+                                        <tr>
+                                            <th> Area </th>
+                                            <th>Pincode</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {PostOffice.map((pincode) => (
+                                            <tr key={pincode.pincode} >
+                                                <td>{pincode.office}</td>
+                                                <td>{pincode.pincode}</td>
+                                            </tr>
+                                        ))
+                                        }
+
+                                    </tbody>
+                                </Table>
+
+
                             </div>
+
+
+
                             <div className="row">&nbsp;</div>
                         </div>
 
@@ -163,20 +190,20 @@ class DataForPincode extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-6">
-                        <div className="row">
-                        <Breadcrumb>
-                                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                                <Breadcrumb.Item active> Search </Breadcrumb.Item>
-                            </Breadcrumb>
-                              <hr/>
-                        </div>
+                            <div className="row">
+                                <Breadcrumb>
+                                    <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+                                    <Breadcrumb.Item active> Search </Breadcrumb.Item>
+                                </Breadcrumb>
+                                <hr />
+                            </div>
 
-                        <h2 className='center'>PIN CODES SEARCH.</h2>
+                            <h2 className='center'>PIN CODES SEARCH.</h2>
                             <h3>Found result for {this.state.keyword}  </h3>
                             <p> {this.state.keyword} : - View all pincode result for this postal code.</p>
 
                             <div className="row">
-                            {Message}
+                                {Message}
                             </div>
 
                             <p><br />  </p>

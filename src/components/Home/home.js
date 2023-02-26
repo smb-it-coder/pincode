@@ -1,6 +1,7 @@
 import React, { useState, useReducer, Fragment } from 'react';
 import SelectState from '../util/SelectState';
 import { useNavigate } from "react-router-dom";
+import Alert from 'react-bootstrap/Alert';
 
 
 const formReducer = (state, event) => {
@@ -48,15 +49,25 @@ function BodyForHome() {
                         </form>
 
                         <div className="text-center">
-                            <p></p>
+                            <p>&nbsp;</p>
                             OR
-                            <p></p>
+                            <p>&nbsp;</p>
+
                         </div>
 
-                        <div className="text-center">
-                        <form className="form-inline">
+                        <div >
+                            <h3>
+
+                                {['warning'].map((variant) => (
+                                    <Alert key={variant} variant={variant}>
+                                        Please  Select Your State
+                                    </Alert>
+                                ))}
+                            </h3>
+
+
                             <SelectState />
-                            </form>
+
                         </div>
 
                         <p><br />  </p>

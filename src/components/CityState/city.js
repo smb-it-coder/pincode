@@ -15,7 +15,8 @@ import Table from 'react-bootstrap/Table';
 function CityState() {
 
     let { state } = useParams();
-    const stateName = (state.replaceAll(/-pincode/ig, "")).replaceAll(/-/ig, " ");
+    alert(state);
+    const stateName = (state.replaceAll(/PINCODE-/ig, "")).replaceAll(/-/ig, " ");
     const cityOption = GetCityOption(stateName);
     const navigate = useNavigate();
 
