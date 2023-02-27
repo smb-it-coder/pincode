@@ -36,9 +36,10 @@ function BodyForHome() {
                     </div>
                     <div className="col-sm-8">
                         <h1>INDIA PIN CODES SEARCH</h1>
-                        <p>Postal code of any location in India is just a single click away!
-                            Give it a try by yourself!</p>
-                        <div className="row"> </div>
+                        
+                            <div className="row"><p>Postal code of any location in India is just a single click away!
+                            Give it a try by yourself!</p></div>
+                        <div className="row">&nbsp; </div>
                         <form className="form-inline" onSubmit={handleSubmit} >
                             <div className="input-group">
                                 <input type="text" name="q" className="form-control" size="50" onChange={setFormData} placeholder="Search Area / Postal Code" required />
@@ -70,7 +71,7 @@ function BodyForHome() {
 
                         </div>
 
-                        <p><br />  </p>
+                        <div className="row">&nbsp; </div>
                     </div>
 
                     <div className="col-sm-2">

@@ -9,19 +9,22 @@ function withParams(Component) {
     return props => <Component {...props} params={useParams()} />;
 }
 
-class VillagePanchayats extends React.Component {
+class AreaDistricts extends React.Component {
 
     constructor(props) {
         super(props);
         let { area } = this.props.params;
        const linkPath =  area.split("pincode-");
-       const village = (linkPath[1]).replaceAll(/-/ig, " ");
+       const district = (linkPath[1]).replaceAll(/-/ig, " ");
+       localStorage.setItem('district', district);
+
+       console.log('AreaDistricts => localStorage', localStorage);
 
         this.state = {
             pincodes: [],
             isFlag: false,
             count: 0,
-            village: village,
+            village: district,
             blink: '', // bread crum privious path
         }
 
@@ -72,9 +75,7 @@ class VillagePanchayats extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
-                            <h3>Found result for {this.state.pincode}  </h3>
-                            <p> {this.state.pincode} : - View all pincode result for this postal code.</p>
-                            <p><br />  </p>
+                            404 NOT FOUND
                         </div>
                         <div className="col-sm-2">
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
@@ -176,7 +177,7 @@ class VillagePanchayats extends React.Component {
 }
 
 
-export default withParams(VillagePanchayats);
+export default withParams(AreaDistricts);
 
 
 
