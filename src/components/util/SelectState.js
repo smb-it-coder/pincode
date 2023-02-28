@@ -8,58 +8,58 @@ function SelectState() {
     <Table striped bordered hover>
       <tbody>
         <tr>
-          <td><a class="text-decoration-none" href='/state/Pincode-Andaman-and-Nicobar-Islands'>Andaman &amp; Nicobar Islands</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Andhra-Pradesh'>Andhra Pradesh</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Arunachal-Pradesh'>Arunachal Pradesh</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Assam'>Assam</a></td>
+          <td><a class="text-decoration-none" href='/state/Andaman-and-Nicobar-Islands-Pincode'>Andaman &amp; Nicobar Islands</a></td>
+          <td><a class="text-decoration-none" href='/state/Andhra-Pradesh-Pincode'>Andhra Pradesh</a></td>
+          <td><a class="text-decoration-none" href='/state/Arunachal-Pradesh-Pincode'>Arunachal Pradesh</a></td>
+          <td><a class="text-decoration-none" href='/state/Assam-Pincode'>Assam</a></td>
         </tr>
         <tr>
-          <td><a class="text-decoration-none" href='/state/Pincode-Bihar'>Bihar</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Chandigarh'>Chandigarh</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Chhattisgarh'>Chhattisgarh</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Dadra-and-Nagar-Haveli'>Dadra & Nagar Haveli</a></td>
+          <td><a class="text-decoration-none" href='/state/Bihar-Pincode'>Bihar</a></td>
+          <td><a class="text-decoration-none" href='/state/Chandigarh-Pincode'>Chandigarh</a></td>
+          <td><a class="text-decoration-none" href='/state/Chhattisgarh-Pincode'>Chhattisgarh</a></td>
+          <td><a class="text-decoration-none" href='/state/Dadra-and-Nagar-Haveli-Pincode'>Dadra & Nagar Haveli</a></td>
         </tr>
         <tr>
-          <td><a class="text-decoration-none" href='/state/Pincode-Daman-and-Diu'>Daman & Diu</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Delhi'>Delhi</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Goa'>Goa</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Gujarat'>Gujarat</a></td>
+          <td><a class="text-decoration-none" href='/state/Daman-and-Diu-Pincode'>Daman & Diu</a></td>
+          <td><a class="text-decoration-none" href='/state/Delhi-Pincode'>Delhi</a></td>
+          <td><a class="text-decoration-none" href='/state/Goa-Pincode'>Goa</a></td>
+          <td><a class="text-decoration-none" href='/state/Gujarat-Pincode'>Gujarat</a></td>
         </tr>
         <tr>
-          <td><a class="text-decoration-none" href='/state/Pincode-Haryana'>Haryana</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Himachal-Pradesh'>Himachal Pradesh</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Jammu-and-Kashmir'>Jammu & Kashmir</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Jharkhand'>Jharkhand</a></td>
+          <td><a class="text-decoration-none" href='/state/Haryana-Pincode'>Haryana</a></td>
+          <td><a class="text-decoration-none" href='/state/Himachal-Pradesh-Pincode'>Himachal Pradesh</a></td>
+          <td><a class="text-decoration-none" href='/state/Jammu-and-Kashmir-Pincode'>Jammu & Kashmir</a></td>
+          <td><a class="text-decoration-none" href='/state/Jharkhand-Pincode'>Jharkhand</a></td>
         </tr>
         <tr>
-          <td><a class="text-decoration-none" href='/state/Pincode-Karnataka'>Karnataka</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Kerala'>Kerala</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Lakshadweep'>Lakshadweep</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Madhya-Pradesh'>Madhya Pradesh</a></td>
+          <td><a class="text-decoration-none" href='/state/Karnataka-Pincode'>Karnataka</a></td>
+          <td><a class="text-decoration-none" href='/state/Kerala-Pincode'>Kerala</a></td>
+          <td><a class="text-decoration-none" href='/state/Lakshadweep-Pincode'>Lakshadweep</a></td>
+          <td><a class="text-decoration-none" href='/state/Madhya-Pradesh-Pincode'>Madhya Pradesh</a></td>
         </tr>
         <tr>
-          <td><a class="text-decoration-none" href='/state/Pincode-Maharashtra'>Maharashtra</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Manipur'>Manipur</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Meghalaya'>Meghalaya</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Mizoram'>Mizoram</a></td>
+          <td><a class="text-decoration-none" href='/state/Maharashtra-Pincode'>Maharashtra</a></td>
+          <td><a class="text-decoration-none" href='/state/Manipur-Pincode'>Manipur</a></td>
+          <td><a class="text-decoration-none" href='/state/Meghalaya-Pincode'>Meghalaya</a></td>
+          <td><a class="text-decoration-none" href='/state/Mizoram-Pincode'>Mizoram</a></td>
         </tr>
         <tr>
-          <td><a class="text-decoration-none" href='/state/Pincode-Nagaland'>Nagaland</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Odisha'>Odisha</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Puducherry'>Puducherry</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Punjab'>Punjab</a></td>
+          <td><a class="text-decoration-none" href='/state/Nagaland-Pincode'>Nagaland</a></td>
+          <td><a class="text-decoration-none" href='/state/Odisha-Pincode'>Odisha</a></td>
+          <td><a class="text-decoration-none" href='/state/Puducherry-Pincode'>Puducherry</a></td>
+          <td><a class="text-decoration-none" href='/state/Punjab-Pincode'>Punjab</a></td>
         </tr>
         <tr>
-          <td><a class="text-decoration-none" href='/state/Pincode-Rajasthan'>Rajasthan</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Sikkim'>Sikkim</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Tamil-Nadu'>Tamil Nadu</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Telangana'>Telangana</a></td>
+          <td><a class="text-decoration-none" href='/state/Rajasthan-Pincode'>Rajasthan</a></td>
+          <td><a class="text-decoration-none" href='/state/Sikkim-Pincode'>Sikkim</a></td>
+          <td><a class="text-decoration-none" href='/state/Tamil-Nadu-Pincode'>Tamil Nadu</a></td>
+          <td><a class="text-decoration-none" href='/state/Telangana-Pincode'>Telangana</a></td>
         </tr>
         <tr>
-          <td><a class="text-decoration-none" href='/state/Pincode-Tripura'>Tripura</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Uttar-Pradesh'>Uttar Pradesh</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-Uttarakhand'>Uttarakhand</a></td>
-          <td><a class="text-decoration-none" href='/state/Pincode-West-Bengal'>West Bengal</a></td>
+          <td><a class="text-decoration-none" href='/state/Tripura-Pincode'>Tripura</a></td>
+          <td><a class="text-decoration-none" href='/state/Uttar-Pradesh-Pincode'>Uttar Pradesh</a></td>
+          <td><a class="text-decoration-none" href='/state/Uttarakhand-Pincode'>Uttarakhand</a></td>
+          <td><a class="text-decoration-none" href='/state/West-Bengal-Pincode'>West Bengal</a></td>
         </tr>
       </tbody>
     </Table>

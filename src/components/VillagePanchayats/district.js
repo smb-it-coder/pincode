@@ -76,14 +76,14 @@ const rowData = (row) => {
                         <div className="row">&nbsp;</div>
 
                         <div className="row">
-                        <div className="col-sm-10">
-                            <strong>
-                                {['warning'].map((variant) => (
-                                    <Alert key={variant} variant={variant}>
-                                        Pincode of District {District} is tebular below. To expand it to select it.
-                                    </Alert>
-                                ))}
-                            </strong>
+                            <div className="col-sm-10">
+                                <strong>
+                                    {['warning'].map((variant) => (
+                                        <Alert key={variant} variant={variant}>
+                                            Pincode of District {District} is tebular below. To expand it to select it.
+                                        </Alert>
+                                    ))}
+                                </strong>
                             </div>
                         </div>
 

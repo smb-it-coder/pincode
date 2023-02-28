@@ -16,7 +16,7 @@ function CityState() {
 
     const [districts , setDistricts] = useState([]);
     let { state } = useParams();
-    const stateName = (state.replaceAll(/PINCODE-/ig, "")).replaceAll(/-/ig, " ");
+    const stateName = (state.replaceAll(/-Pincode/ig, "")).replaceAll(/-/ig, " ");
     localStorage.setItem('state', stateName);
    
     const removeEntity = (item) =>{
@@ -28,10 +28,11 @@ function CityState() {
         }
         return true;
     }
-    
+   // alert('hi city');
     removeEntity('district');
     removeEntity('childId');
     removeEntity('childName');
+    removeEntity('row');
 
     const  setEntity  = (entity) => { 
         localStorage.setItem('district', entity);
@@ -107,7 +108,7 @@ function CityState() {
 
                                         {districts.map((city) => (
                                             <tr key={city.district} >
-                                                <td>&nbsp; <a className="text-decoration-none"  href={`/pincode-${transform(city.district)}-city`}  onClick={() => setEntity(city.district)}  > {city.district} </a> </td>
+                                                <td>&nbsp; <a className="text-decoration-none"  href={`/${transform(city.district)}-pincode`}  onClick={() => setEntity(city.district)}  > {city.district} </a> </td>
                                                 <td>&nbsp;  {stateName} </td>
                                             </tr>
                                         ))

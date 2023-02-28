@@ -2,8 +2,11 @@
 import React, { useState, useEffect, Component } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import getVillagePincode from '../../Services/getVillagePincode.service';
+import districtsPincode from '../../Services/districts.service';
 import { Helmet } from "react-helmet";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Table from 'react-bootstrap/Table';
+import Alert from 'react-bootstrap/Alert';
 
 function withParams(Component) {
     return props => <Component {...props} params={useParams()} />;
@@ -14,10 +17,9 @@ class AreaDistricts extends React.Component {
     constructor(props) {
         super(props);
         let { area } = this.props.params;
-       const linkPath =  area.split("pincode-");
-       const district = (linkPath[1]).replaceAll(/-/ig, " ");
-       
-
+       const linkPath =  area.split("-pincode");
+       const district = (linkPath[0]).replaceAll(/-/ig, " ");
+       localStorage.setItem('district', district);
        
        console.log(' level 2 => localStorage', localStorage);
 
@@ -25,8 +27,7 @@ class AreaDistricts extends React.Component {
             pincodes: [],
             isFlag: false,
             count: 0,
-            village: district,
-            blink: '', // bread crum privious path
+            district: district,
         }
 
 
@@ -41,29 +42,47 @@ class AreaDistricts extends React.Component {
 
     pincodeRead() {
 
-        getVillagePincode(this.state.pincode)
+        let state = localStorage.getItem('state');
+        let district = localStorage.getItem('district')
+        districtsPincode(state, district)
             .then(res => {
+
+               // console.log('res', res);
                 const pincodeList = {
-                    Message: res.data[0].Message,
-                    PostOffice: res.data[0].PostOffice,
-                    Status: res.data[0].Status
+                    PostOffice: res.data,
+                    Status: res.status
                 };
-                const numRows = res.data[0].PostOffice.length;
-                this.setState({ pincodes: pincodeList, isFlag: true, count: numRows || 0 });
+                const numRows = res.count;
+                this.setState({ pincodes: pincodeList, isFlag: true, count: numRows });
 
             });
     }
 
-   
-
+  
 
 
     render() {
-        const PostOffice = this.state.pincodes.PostOffice;
+        
         // const numRows = membersToRender.length
         const isFlag = this.state.isFlag;
         const Status = this.state.pincodes.Status;
         const Message = '';
+
+
+        const transform = (name) => {
+            let str = name.replaceAll(/ /ig, "-");
+            let str1 = str.replace(/[^a-zA-Z0-9]/g, '-');
+            let city =  str1 + '-pincode';
+
+            return (city.toLowerCase()).replaceAll(/--/ig, "-");
+        }
+
+        const setEntity = (id, childName, row) => {
+            localStorage.setItem('childId', id);
+            localStorage.setItem('childName', childName);
+            localStorage.setItem('row', JSON.stringify(row));
+            //console.log(' level 31 => localStorage', localStorage);
+        }
 
      
 
@@ -86,8 +105,9 @@ class AreaDistricts extends React.Component {
         }
 
         if (isFlag && Status !== 'Error') {
-              let stateName = PostOffice[0].State;
-              const stateLink =  stateName.replaceAll(/ /ig, "-");
+
+             const locations = this.state.pincodes.PostOffice;
+
             return (
                 <div className="container-fluid bg-grey">
                     <div className="row">
@@ -105,29 +125,32 @@ class AreaDistricts extends React.Component {
                                
                             </div>
 
-
-
-                            <h3> <strong>Pincode : {this.state.pincode}</strong>  </h3>
-
+                           
                             <div className="row">
-                                <p>Total number of {this.state.count} post offices linked with pincode <strong>{this.state.pincode}</strong> .
-                                    This postal index number belongs to
-                                    <Link to={`#`}> <strong>{PostOffice[0].District}</strong></Link>  District
-                                    of      <Link to={`/${stateLink}-pincode`}> <strong>{PostOffice[0].State}</strong></Link> in India.
-                                </p>
+                            <div className="col-sm-10">
+                                <Table striped bordered hover size="sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Location</th>
+                                            <th>Pincode</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {locations.map((area) => (
+                                            <tr key={area.id} >
+                                                <td>&nbsp; <a class="text-decoration-none"
+                                                 href={`/v/${transform(area.village + '-' + area.office)}`}
+                                                 onClick={() => setEntity(area.id, area.village, area)}
+                                                >{area.village} ,  {area.office}</a> </td>
+                                                <td>&nbsp; {area.pincode} </td>
+                                            </tr>
+                                        ))
+                                        }
 
+                                    </tbody>
+                                </Table>
                             </div>
-                            <div className="row">
-                                <strong> List of Post Offices holding Pincode {this.state.pincode}</strong>
-                            </div>
-                            <div className="row">
-                                <p>Given below is the list of all post offices resulting to pincode number {this.state.pincode} &nbsp; :-</p>
-                                {PostOffice.map((pincode) => (
-                                    <div className="col-sm-6" key="{pincode.Name}">{pincode.Name}</div>
-                                ))}
-
-
-                            </div>
+                        </div>
                             <div className="row">&nbsp;</div>
                             <div className="row">&nbsp;</div>
                         </div>

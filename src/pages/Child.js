@@ -1,29 +1,33 @@
 import NavTop from '../components/nav/fixedTop';
-import AreaComponent from '../components/VillagePanchayats/area';
+import ChildComponent from '../components/VillagePanchayats/child';
 import Footer from '../components/nav/footer';
 
-const Area = () => {
+const Child = () => {
 
   ///console.log('localStorage', localStorage);  //localStorage.getItem("mytime");
 
   const District = localStorage.getItem("district");
   const State = localStorage.getItem("state");
   const childId = localStorage.getItem("childId");
-  alert('area');
-  
-
-  console.log('Area > localStorage ', localStorage);
-
+ // alert('area');
+  console.log('Child > localStorage ', localStorage);
+ 
+ 
   return (
     <div className="App">
        <NavTop /> 
-       <AreaComponent/>
+       <ChildComponent/>
        <Footer />
     </div>
   );
 
-  
+
+
+
+
+
+
 };
 
 
-export default Area;
+export default Child;
