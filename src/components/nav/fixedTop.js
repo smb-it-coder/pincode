@@ -1,5 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import {ResponsiveEmbed, Image} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,31 +8,32 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function NavTop() {
   return (
-    <Navbar  collapseOnSelect expand="xl" bg="warning" variant="dark">
-      <Container fluid>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
-          <Nav className="me-auto my-2 my-lg-0 nav-max-hight" navbarScroll  >
-            <Nav.Link href="/"><Image  src='logo.png' className="logo-link" responsive /></Nav.Link>
-            <Nav.Link href="/" className="p-1">Home</Nav.Link>
-            <NavDropdown title="Pincode" id="basic-nav-dropdown" className="p-1">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-            <Navbar.Brand href="" className="p-1">About</Navbar.Brand>
-          </Nav>
+    <div class="container-fluid bg-light position-relative shadow">
+      <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
+        <a href="/" class="navbar-brand font-weight-bold text-secondary" style={{'font-size': 50 + 'px'}} >
+          <img src="logo.png" alt="Search my Picode" width="300" style={{float: 'left'}} />
+        </a>
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#navbarCollapse" aria-expanded="false">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse justify-content-between collapse" id="navbarCollapse" >
+          <div class="navbar-nav font-weight-bold mx-auto py-0">
+            <a href="index.html" class="nav-item nav-link">Home</a>
+            <a href="about.html" class="nav-item nav-link">About</a>
           
-        </Navbar.Collapse>
-       
-      </Container>
-    </Navbar>
+            <div class="nav-item dropdown">
+              <a href="/" class="nav-link dropdown-toggle active" data-toggle="dropdown" aria-expanded="false">Pincode</a>
+              <div class="dropdown-menu rounded-0 m-0">
+                <a href="/" class="dropdown-item">Search By State</a>
+                <a href="/" class="dropdown-item">Search By District</a>
+              </div>
+            </div>
+            <a href="contact.html" class="nav-item nav-link">Contact</a>
+          </div>
+           </div>
+      </nav>
+    </div>
+    
 
 
 

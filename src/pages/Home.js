@@ -1,6 +1,7 @@
 
 import NavTop from '../components/nav/fixedTop';
 import NavBar from '../components/nav/Navbar';
+import Hbreadcrum from '../components/breadcrum/hbreadcrum';
 import Footer from '../components/nav/footer';
 import BodyForHome from '../components/Home/home';
 import TwoDigitPincodeBelongsToState from '../components/util/twoDigitPincodeBelongsToState';
@@ -13,6 +14,10 @@ const Home = () => {
         <title>Home page title by me.</title>
       </Helmet>
       <NavTop />
+     
+        <Hbreadcrum />
+      
+     
       <BodyForHome />
 
       <div className="container-fluid bg-grey">
