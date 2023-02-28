@@ -2,16 +2,19 @@ import React, { useState, useReducer, Fragment, useEffect } from 'react';
 import { Helmet } from "react-helmet";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import getCityByState from '../../Services/state.service';
+
 import * as __CONSTA from '../../Services/consta';
 import Table from 'react-bootstrap/Table';
 import Alert from 'react-bootstrap/Alert';
+import getCityByState from '../../Services/state.service';
+import row from '../../Services/rowContent.service';
 
 
 
 
 function CityState() {
-const [districts , setDistricts] = useState([]);
+
+    const [districts , setDistricts] = useState([]);
     let { state } = useParams();
     const stateName = (state.replaceAll(/PINCODE-/ig, "")).replaceAll(/-/ig, " ");
     localStorage.setItem('state', stateName);
@@ -19,6 +22,7 @@ const [districts , setDistricts] = useState([]);
     const removeEntity = (item) =>{
         if(localStorage.getItem(item)){
             localStorage.removeItem(item);
+
         } else {
             return false;
         }
@@ -26,8 +30,14 @@ const [districts , setDistricts] = useState([]);
     }
     
     removeEntity('district');
-   
-    console.log('CityState => localStorage', localStorage);
+    removeEntity('childId');
+    removeEntity('childName');
+
+    const  setEntity  = (entity) => { 
+        localStorage.setItem('district', entity);
+    } ;
+    
+    console.log(' level 1 => localStorage', localStorage);
 
     
    function transform (name) { 
@@ -97,21 +107,8 @@ const [districts , setDistricts] = useState([]);
 
                                         {districts.map((city) => (
                                             <tr key={city.district} >
-                                                
-                                                
-                                                <td>&nbsp; <a className="text-decoration-none" href={`/pincode-${transform(city.district)}-city`}>
-                                                   {city.district}
-                                                    </a>
-                                                    </td>
-          
-
-
-
-                                                <td>&nbsp;
-                                                    {stateName}
-                                                </td>
-
-
+                                                <td>&nbsp; <a className="text-decoration-none"  href={`/pincode-${transform(city.district)}-city`}  onClick={() => setEntity(city.district)}  > {city.district} </a> </td>
+                                                <td>&nbsp;  {stateName} </td>
                                             </tr>
                                         ))
                                         }

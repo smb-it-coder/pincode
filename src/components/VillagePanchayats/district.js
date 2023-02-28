@@ -1,39 +1,43 @@
 import React, { useState, useReducer, Fragment, useEffect } from 'react';
 import { Helmet } from "react-helmet";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+//import { Link, useParams, useNavigate } from 'react-router-dom';
 import districtsPincode from '../../Services/districts.service';
 import * as __CONSTA from '../../Services/consta';
 import Table from 'react-bootstrap/Table';
 import Alert from 'react-bootstrap/Alert';
 
-
-
-
 function DistrictState() {
 const [locations , setLocations] = useState([]);
-   // let { area } = useParams();
-   // alert (area);
-  //  const stateName = 'UP';//area.split('pincode-');
-  
-  
+   
   const getDistrict = (value) => {
-    return  value.replaceAll(/ city/ig, "");
-
+          return  value.replaceAll(/ city/ig, "");
    }
 
-  // const cityName = getDistrict();
-
-
-   //alert(cityName);
    const District = localStorage.getItem("district");
+
+   console.log(' level 3=> localStorage', localStorage);
 
    function transform (name) { 
       let str = name.replaceAll(/ /ig, "-"); 
       let str1 = str.replace(/[^a-zA-Z0-9]/g, '-');
       let city = str1 + '-pincode';
+      
     return   (city.toLowerCase()).replaceAll(/--/ig, "-");
  }  
+
+ function setEntity (id, childName, row) { 
+    localStorage.setItem('childId', id);
+    localStorage.setItem('childName', childName);
+    rowData(row);
+    //console.log(' level 31 => localStorage', localStorage);
+}  
+
+const rowData = (row) => {
+    localStorage.setItem('row', JSON.stringify(row));
+}
+
+
 
     useEffect(
         () => {
@@ -90,27 +94,21 @@ const [locations , setLocations] = useState([]);
                                 <Table striped bordered hover size="sm">
                                     <thead>
                                         <tr>
-                                            <th>District</th>
-                                            <th>State</th>
+                                            <th>Location</th>
+                                            <th>Pincode</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         {locations.map((area) => (
                                             <tr key={area.id} >
+                                                <td>&nbsp; <a class="text-decoration-none"
+                                                 href={`/${transform(area.village + '-' + area.office)}`}
+                                                
+                                                 onClick={() => setEntity(area.id, area.village, area)}
                                                 
                                                 
-                                                <td>&nbsp; 
-                                                    <a class="text-decoration-none"
-                                                     href={`/${transform(area.village + '-' + area.office)}`}>
-                                                  {area.village} ,  {area.office}
-                                                    </a>
-                                                    </td>
-                                                <td>&nbsp;
-                                                {area.pincode}
-                                                </td>
-
-
+                                                >{area.village} ,  {area.office}</a> </td>
+                                                <td>&nbsp; {area.pincode} </td>
                                             </tr>
                                         ))
                                         }

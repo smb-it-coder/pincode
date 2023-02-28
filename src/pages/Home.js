@@ -1,5 +1,6 @@
 
 import NavTop from '../components/nav/fixedTop';
+import NavBar from '../components/nav/Navbar';
 import Footer from '../components/nav/footer';
 import BodyForHome from '../components/Home/home';
 import TwoDigitPincodeBelongsToState from '../components/util/twoDigitPincodeBelongsToState';

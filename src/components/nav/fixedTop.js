@@ -7,17 +7,14 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function NavTop() {
   return (
-    <Navbar bg="light" expand="lg" variant="light">
+    <Navbar  collapseOnSelect expand="xl" bg="warning" variant="dark">
       <Container fluid>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
-          <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: '100px' }}
-            navbarScroll
-          >
-            <Nav.Link href="/">Home</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+          <Nav className="me-auto my-2 my-lg-0 nav-max-hight" navbarScroll  >
+            <Nav.Link href="/"><Image  src='logo.png' className="logo-link" responsive /></Nav.Link>
+            <Nav.Link href="/" className="p-1">Home</Nav.Link>
+            <NavDropdown title="Pincode" id="basic-nav-dropdown" className="p-1">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 Another action
@@ -28,7 +25,7 @@ function NavTop() {
                 Separated link
               </NavDropdown.Item>
             </NavDropdown>
-            <Navbar.Brand href="">Pincode Area</Navbar.Brand>
+            <Navbar.Brand href="" className="p-1">About</Navbar.Brand>
           </Nav>
           
         </Navbar.Collapse>

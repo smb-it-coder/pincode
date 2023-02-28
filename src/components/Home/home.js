@@ -44,7 +44,7 @@ function BodyForHome() {
                             <div className="input-group">
                                 <input type="text" name="q" className="form-control" size="50" onChange={setFormData} placeholder="Search Area / Postal Code" required />
                                 <div className="input-group-btn">
-                                    <button type="submit" className="btn btn-danger">Search</button>
+                                    <button type="submit" className="btn btn-warning">Search</button>
                                 </div>
                             </div>
                         </form>

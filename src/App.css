@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+@media (min-width: 992px) { 
+  .nav-max-hight {
+    maxHeight: '203px';
+  }
+  img > .logo-link {
+    height: 115px;
+    margin-left: 25px;
+    padding-right: 30px;
+}
+  
+}

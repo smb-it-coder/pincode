@@ -16,9 +16,10 @@ class AreaDistricts extends React.Component {
         let { area } = this.props.params;
        const linkPath =  area.split("pincode-");
        const district = (linkPath[1]).replaceAll(/-/ig, " ");
-       localStorage.setItem('district', district);
+       
 
-       console.log('AreaDistricts => localStorage', localStorage);
+       
+       console.log(' level 2 => localStorage', localStorage);
 
         this.state = {
             pincodes: [],
@@ -31,6 +32,8 @@ class AreaDistricts extends React.Component {
 
 
     }
+
+    
 
     componentDidMount() {
         this.pincodeRead();
@@ -51,6 +54,8 @@ class AreaDistricts extends React.Component {
             });
     }
 
+   
+
 
 
     render() {
@@ -61,11 +66,6 @@ class AreaDistricts extends React.Component {
         const Message = '';
 
      
-
-
-
-
-
 
         if (!isFlag) {
             return (

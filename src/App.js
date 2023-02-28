@@ -6,6 +6,7 @@ import PostOffice from './pages/PostOffice';
 import Pincode from './pages/Pincode';
 import Village from './pages/Village';
 import Area from './pages/Area';
+import About from './pages/About';
 
 function App() {
   const  v1="/pincode-";
@@ -20,14 +21,12 @@ function App() {
         <Route path='/pincode/:pincode' element={<PostOffice />} />
         <Route path='/pincode/:pincode' element={<PostOffice />} />
         <Route path='/:area' element={<Area />} />
+        <Route path='/about' element={<About/>} />
+        
         
       </Routes>
     </BrowserRouter>
   );
-// vpath -> pilakhtarjait
-
-//  villages/Firozabad/Ekah/Nagla-Jagannath
-// pilakhtarfateh-jasrana-firozabad-uttar-pradesh-283207
   
 }
 

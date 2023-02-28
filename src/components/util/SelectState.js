@@ -1,28 +1,11 @@
 import React from 'react';
-//import { useNavigate } from "react-router-dom";
-//import Form from 'react-bootstrap/Form';
-// React Select Dropdown onChange Event Handler Tutorial
 import Table from 'react-bootstrap/Table';
 
 function SelectState() {
- // const navigate = useNavigate();
- // const [selectValue, setSelectValue] = React.useState("");
-
-
-  // const onChange = (event) => {
-  //   const value = event.target.value;
-  //   setSelectValue(value);
-  //   //  alert(window.location.href);
-  //   let path = `${value}-pincode`
-  //   navigate(path);
-  // };
-
-
+ 
   return (
 
-
     <Table striped bordered hover>
-
       <tbody>
         <tr>
           <td><a class="text-decoration-none" href='/state/Pincode-Andaman-and-Nicobar-Islands'>Andaman &amp; Nicobar Islands</a></td>

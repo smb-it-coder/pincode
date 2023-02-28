@@ -1,6 +1,8 @@
 import NavTop from '../components/nav/fixedTop';
 import AreaComponent from '../components/VillagePanchayats/area';
 import DistrictComponent from '../components/VillagePanchayats/district';
+import ChildComponent from '../components/VillagePanchayats/child';
+
 import Footer from '../components/nav/footer';
 
 const Area = () => {
@@ -9,6 +11,8 @@ const Area = () => {
 
   const District = localStorage.getItem("district");
   const State = localStorage.getItem("state");
+  const childId = localStorage.getItem("childId");
+  console.log('Area > localStorage ', localStorage);
   
   if(State && !District) {
     return (
@@ -18,11 +22,19 @@ const Area = () => {
          <Footer />
       </div>
     );
-  } else if (State && District) {
+  } else if (State && District && !childId) {
     return (
       <div className="App">
          <NavTop /> 
          <DistrictComponent/>
+         <Footer />
+      </div>
+    );
+  } else if (State && District && childId) {
+    return (
+      <div className="App">
+         <NavTop /> 
+         <ChildComponent/>
          <Footer />
       </div>
     );
