@@ -20,6 +20,14 @@ class DataForPincode extends React.Component {
             isFlag: false,
             isCity: false
         }
+
+        this.earchKey  = '';
+        if (!isNaN(this.queryParams.get("q"))) {
+            this.earchKey =   `Pincode : `;
+        } else {
+            this.earchKey =  `Location :  ${this.queryParams.get("q")}`; 
+        }
+
     }
 
     componentDidMount() {
@@ -78,18 +86,7 @@ class DataForPincode extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
-                            <div className="row">
-                                <Breadcrumb>
-                                    <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                                    <Breadcrumb.Item active> Search </Breadcrumb.Item>
-                                </Breadcrumb>
-                                <hr />
-                            </div>
-
-
-                            <h3>Found result for {this.state.keyword}  </h3>
-                            <p> {this.state.keyword} : - View all pincode result for this postal code.</p>
-                            <p><br />  </p>
+                            Fetching...
                         </div>
                         <div className="col-sm-2">
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
@@ -109,15 +106,7 @@ class DataForPincode extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
-                            <div className="row">
-                                <Breadcrumb>
-                                    <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                                    <Breadcrumb.Item active> Search </Breadcrumb.Item>
-                                </Breadcrumb>
-                                <hr />
-                            </div>
-
-                            <h3>Found result for <strong>{this.state.keyword}</strong>  </h3>
+                            {/* <h3>Found result for <strong>{this.state.keyword}</strong>  </h3>
                             <p>
                                 <strong>
                                     {(() => {
@@ -132,11 +121,18 @@ class DataForPincode extends React.Component {
                                         }
                                     })()}
                                 </strong> : - View all pincode result for this postal code.
-                            </p>
+                            </p> */}
+
+
+
+
+
+
                             <div className="row">
-                                <h4><strong>{PostOffice[0].office} <strong>
-                                                        <a href={'/pincode/' + PostOffice[0].pincode}> {PostOffice[0].pincode}</a>
-                                                    </strong></strong> </h4>
+                               
+                                <h2>{this.earchKey }
+                                    <a href={'/pincode/' + PostOffice[0].pincode}> {PostOffice[0].pincode} </a>
+                                </h2>
                             </div>
                             <div className="row">&nbsp;</div>
 
@@ -147,16 +143,17 @@ class DataForPincode extends React.Component {
                                 <Table responsive="sm">
                                     <thead>
                                         <tr>
-                                            <th> Area </th>
-                                            <th>Pincode</th>
+                                        <th>Pincode</th>
+                                         <th> Location </th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         {PostOffice.map((pincode) => (
-                                            <tr key={pincode.pincode} >
-                                                <td>{pincode.office}</td>
+                                            <tr key={pincode.id} >
                                                 <td>{pincode.pincode}</td>
+                                                <td>{pincode.village} , {pincode.office} {pincode.state} INDIA </td>
+                                                
                                             </tr>
                                         ))
                                         }
@@ -190,13 +187,6 @@ class DataForPincode extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-6">
-                            <div className="row">
-                                <Breadcrumb>
-                                    <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                                    <Breadcrumb.Item active> Search </Breadcrumb.Item>
-                                </Breadcrumb>
-                                <hr />
-                            </div>
 
                             <h2 className='center'>PIN CODES SEARCH.</h2>
                             <h3>Found result for {this.state.keyword}  </h3>

@@ -4,7 +4,7 @@ export default async function getPincodeDataByCity(city) {
 
   if (city) {
     try {
-      const res = await http.get(`/postoffice/${city}`);
+      const res = await http.get(`/location/${city}`);
 
       const result = {
         data: res.data,

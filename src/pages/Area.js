@@ -1,4 +1,5 @@
 import NavTop from '../components/nav/fixedTop';
+import Abreadcrum from '../components/breadcrum/abreadcrum';
 import AreaComponent from '../components/VillagePanchayats/area';
 import Footer from '../components/nav/footer';
 
@@ -6,17 +7,16 @@ const Area = () => {
 
   ///console.log('localStorage', localStorage);  //localStorage.getItem("mytime");
 
-  const District = localStorage.getItem("district");
-  const State = localStorage.getItem("state");
-  const childId = localStorage.getItem("childId");
-  alert('area');
-  
+  //const District = localStorage.getItem("district");
+  //const State = localStorage.getItem("state");
+  //const childId = localStorage.getItem("childId");
 
-  console.log('Area > localStorage ', localStorage);
+  console.log(' LEVEL 2 ', localStorage);
 
   return (
     <div className="App">
        <NavTop /> 
+       <Abreadcrum />
        <AreaComponent/>
        <Footer />
     </div>

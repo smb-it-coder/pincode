@@ -9,7 +9,7 @@ function NavTop() {
   return (
     <Navbar  collapseOnSelect expand="xs"  >
       <Container fluid>
-      <a href="/"><img  src='logo.png' responsive  style={{height:"98px"}} /></a>
+      <a href="/"><img  src='/logo.png' responsive  style={{height:"98px"}} /></a>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0 nav-max-hight" navbarScroll  >

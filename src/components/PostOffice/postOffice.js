@@ -2,8 +2,6 @@ import React, { useState, useEffect, Component } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import getPincodeDataByCode from '../../Services/pincodeByCode.service';
 import { Helmet } from "react-helmet";
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
 function withParams(Component) {
     return props => <Component {...props} params={useParams()} />;
 }
@@ -29,13 +27,29 @@ class PostOfficeByPincode extends React.Component {
 
         getPincodeDataByCode(this.state.pincode)
             .then(res => {
-                const pincodeList = {
-                    Message: res.data[0].Message,
-                    PostOffice: res.data[0].PostOffice,
-                    Status: res.data[0].Status
-                };
-                const numRows = res.data[0].PostOffice.length;
-                this.setState({ pincodes: pincodeList, isFlag: true, count: numRows || 0 });
+                
+               
+                if(res.status === 404){
+                    let pincodeList = {
+                        Message: '',
+                        PostOffice: [],
+                        Status: res.status
+                    };
+                    let numRows =  0;
+                    this.setState({ pincodes: pincodeList, isFlag: false, count: numRows || 0 });
+
+                } else {
+                    let pincodeList = {
+                        Message: '',
+                        PostOffice: res.data,
+                        Status: res.status
+                    };
+                    let numRows =  res.count;
+                    this.setState({ pincodes: pincodeList, isFlag: true, count: numRows || 0 });
+
+                }
+                
+               
 
             });
     }
@@ -58,8 +72,7 @@ class PostOfficeByPincode extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
-                            <h3>Found result for {this.state.pincode}  </h3>
-                            <p> {this.state.pincode} : - View all pincode result for this postal code.</p>
+                            <h3>Pincode data not found for {this.state.pincode}  </h3>
                             <p><br />  </p>
                         </div>
                         <div className="col-sm-2">
@@ -71,7 +84,8 @@ class PostOfficeByPincode extends React.Component {
         }
 
         if (isFlag && Status !== 'Error') {
-              let stateName = PostOffice[0].State;
+           // console.log('PostOffice ===> ', PostOffice);
+              let stateName = PostOffice[0].state;
               const stateLink =  stateName.replaceAll(/ /ig, "-");
             return (
                 <div className="container-fluid bg-grey">
@@ -80,17 +94,6 @@ class PostOfficeByPincode extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
-
-                            <div className="row">
-                                <Breadcrumb>
-                                    <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                                    <Breadcrumb.Item active> Pincode {this.state.pincode} </Breadcrumb.Item>
-                                </Breadcrumb>
-                                <hr />
-                            </div>
-
-
-
                             <h3> <strong>Pincode : {this.state.pincode}</strong>  </h3>
 
                             <div className="row">
@@ -107,7 +110,7 @@ class PostOfficeByPincode extends React.Component {
                             <div className="row">
                                 <p>Given below is the list of all post offices resulting to pincode number {this.state.pincode} &nbsp; :-</p>
                                 {PostOffice.map((pincode) => (
-                                    <div className="col-sm-6" key="{pincode.Name}">{pincode.Name}</div>
+                                    <div className="col-sm-6" key="{pincode.id}"><strong>{pincode.village} </strong>, {pincode.office} {pincode.subdistrict} </div>
                                 ))}
 
 

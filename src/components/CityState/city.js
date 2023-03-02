@@ -1,6 +1,5 @@
 import React, { useState, useReducer, Fragment, useEffect } from 'react';
 import { Helmet } from "react-helmet";
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 
 import * as __CONSTA from '../../Services/consta';
@@ -8,9 +7,6 @@ import Table from 'react-bootstrap/Table';
 import Alert from 'react-bootstrap/Alert';
 import getCityByState from '../../Services/state.service';
 import row from '../../Services/rowContent.service';
-
-
-
 
 function CityState() {
 
@@ -63,7 +59,11 @@ function CityState() {
     return (
         <Fragment>
             <Helmet>
-                <title>    PinCode {stateName}, {stateName} Post Office Search My pincode | {__CONSTA.NAMESPACE} </title>
+                <title>  Find {stateName} Pin Codes List – All Districts Post office details | SearchMyPincode </title>
+                <meta name="description" content={`Find all ${stateName} pin codes list and all districts post office details at SearchMyPincode.in`} />
+                <meta name="keywords" content={`${stateName} pin code list, ${stateName} post offices list, ${stateName} postal code, ${stateName} zip code, ${stateName} postal index number,  `} />
+                <meta http-equiv="Content-Language" content="English" />
+                   
             </Helmet>
             <div className="container-fluid bg-grey">
                 <div className="row">
@@ -71,23 +71,21 @@ function CityState() {
                         <span className="glyphicon glyphicon-globe logo slideanim"></span>
                     </div>
                     <div className="col-sm-8">
+                       
+                        <h1>{stateName} pin code list</h1>
                         <div className="row">
-                            <Breadcrumb>
-                                <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                                <Breadcrumb.Item active> {stateName} </Breadcrumb.Item>
-                            </Breadcrumb>
-                            <hr />
+                            <p>Find complete list of {stateName} pin codes. Explore {stateName} post office pin codes by given district or pin code number. {stateName} has total NIL post offices that is distributed in number districts. </p>
                         </div>
-                        <h1>{stateName} Pincode</h1>
+
                         <div className="row">&nbsp;</div>
 
                         <div className="row">
+                        
+
                         <div className="col-sm-10">
                             <strong>
                                 {['warning'].map((variant) => (
-                                    <Alert key={variant} variant={variant}>
-                                        Pincode of state {stateName} is tebular below. To expand it to select it.
-                                    </Alert>
+                                    <Alert key={variant} variant={variant}><h2>List of all Districts in {stateName} :</h2> </Alert>
                                 ))}
                             </strong>
                             </div>
@@ -118,6 +116,14 @@ function CityState() {
                                 </Table>
                             </div>
                         </div>
+                        <div className="row">
+                        <h2>{stateName} Pin Code related FAQ</h2>
+                        <h3>Q: How many post offices are there in {stateName} ?</h3>
+                        <p>Ans: There are total number of post offices in {stateName} </p>
+                        <h3>Q: How many pincodes are there in {stateName}</h3>
+                        <p>Ans: There are total number pincodes based on {districts.length} in {stateName}, India.</p>
+                        </div>
+
                     </div>
 
                     <div className="col-sm-2">

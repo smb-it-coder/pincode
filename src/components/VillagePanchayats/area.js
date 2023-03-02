@@ -4,7 +4,6 @@ import { Link, useParams } from 'react-router-dom';
 import getVillagePincode from '../../Services/getVillagePincode.service';
 import districtsPincode from '../../Services/districts.service';
 import { Helmet } from "react-helmet";
-import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Table from 'react-bootstrap/Table';
 import Alert from 'react-bootstrap/Alert';
 
@@ -19,7 +18,24 @@ class AreaDistricts extends React.Component {
         let { area } = this.props.params;
        const linkPath =  area.split("-pincode");
        const district = (linkPath[0]).replaceAll(/-/ig, " ");
+       this.dist = this.capitalizeFirstLetter(district);
+       this.dist_address = 'NA';
+       this.dist_pincode = 'NA';
+
+      
        localStorage.setItem('district', district);
+       this.stateName = localStorage.getItem('state');
+       const removeEntity = (item) =>{
+            if (localStorage.getItem(item)) {
+                localStorage.removeItem(item);
+            } else {
+                return false;
+            }
+            return true;
+        }
+        removeEntity('childId');
+        removeEntity('childName');
+        removeEntity('row');
        
        console.log(' level 2 => localStorage', localStorage);
 
@@ -34,6 +50,11 @@ class AreaDistricts extends React.Component {
 
     }
 
+
+     capitalizeFirstLetter(str) {
+        const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+        return capitalized;
+    }
     
 
     componentDidMount() {
@@ -81,7 +102,6 @@ class AreaDistricts extends React.Component {
             localStorage.setItem('childId', id);
             localStorage.setItem('childName', childName);
             localStorage.setItem('row', JSON.stringify(row));
-            //console.log(' level 31 => localStorage', localStorage);
         }
 
      
@@ -110,22 +130,28 @@ class AreaDistricts extends React.Component {
 
             return (
                 <div className="container-fluid bg-grey">
+                    <Helmet>
+                        <title>{this.dist} Pin Codes List – {this.stateName } Post offices Address | SearchMyPincode </title>
+                        <meta name="description" content={`Find all ${this.dist} pin codes list and ${this.dist}, ${localStorage.getItem('state')} post offices address at searchmypincode.in`} />
+                        <meta name="keywords" content={` ${this.dist} pin code, ${this.dist} pin code list, ${this.dist} post office address, ${this.dist} postal code, district ${this.dist} zip code, ${localStorage.getItem('state')} pin code`} />
+                        <meta http-equiv="Content-Language" content="English" />
+                    </Helmet>
+
+
                     <div className="row">
                         <div className="col-sm-2">
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
+                        <div className="row">
+                        <h1>{this.dist} pin code</h1>
+                        <p> {this.dist} Head office Pin Code is {this.dist_pincode}. Pin Code or Zip Code is also known as Postal Code. {this.dist} is located in {localStorage.getItem('state')}, India. </p>
+                        <p>Find complete list of {this.dist} pin codes. Explore {this.dist} post office pin codes by given location or pin code number. 
+Following are the list of {this.dist} pin codes:</p>
 
-                            <div className="row">
-                                <Breadcrumb>
-                                    <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-                                    <Breadcrumb.Item active> Pincode {this.state.pincode} </Breadcrumb.Item>
-                                </Breadcrumb>
-                                <hr />
-                               
-                            </div>
+                        </div>
+                       
 
-                           
                             <div className="row">
                             <div className="col-sm-10">
                                 <Table striped bordered hover size="sm">
@@ -152,7 +178,18 @@ class AreaDistricts extends React.Component {
                             </div>
                         </div>
                             <div className="row">&nbsp;</div>
-                            <div className="row">&nbsp;</div>
+                            <div className="row">
+                            <h2>{this.dist} {this.stateName} Pin Code FAQ</h2>
+                            <h3>Q: What is {this.dist} PIN Code Number in {this.stateName}?</h3>
+                            <p>Ans: {this.dist} Pin Code number is {this.dist_pincode}. District {this.dist} is located in {this.stateName}, India.</p>
+                            <h3>Q: What is the main address of {this.dist} Head Post Office,{this.stateName}?</h3>
+                            <p>Ans: {this.dist} Head Post Office is located at {this.dist}, {this.stateName}, at pincode {this.dist_pincode}. It is situated at {this.dist_address}</p>
+
+                            <h3>Q: How many post offices are there in {this.dist}</h3>
+                            <p>Ans: There are total {locations.length} post offices in {this.dist}.</p>
+
+
+                            </div>
                         </div>
 
                         <div className="col-sm-2">

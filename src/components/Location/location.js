@@ -15,6 +15,7 @@ class Location extends React.Component {
         super(props);
 
             const { location } = this.props.params;
+            //alert(location);
             this.breadcrumData  = location.split("-Pincode-Found-In-");
             this.city = this.breadcrumData[0];
             this.cstate = this.breadcrumData[1];
