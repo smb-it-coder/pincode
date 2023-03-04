@@ -21,7 +21,6 @@ class AreaDistricts extends React.Component {
        this.dist = this.capitalizeFirstLetter(district);
        this.dist_address = 'NA';
        this.dist_pincode = 'NA';
-
       
        localStorage.setItem('district', district);
        this.stateName = localStorage.getItem('state');
@@ -37,16 +36,17 @@ class AreaDistricts extends React.Component {
         removeEntity('childName');
         removeEntity('row');
        
-       console.log(' level 2 => localStorage', localStorage);
+       console.log(' level 2 ', localStorage);
 
         this.state = {
             pincodes: [],
             isFlag: false,
             count: 0,
             district: district,
+            isloder: true,
         }
 
-
+       // const [isloder , setIsloder] = useState([true]);
 
     }
 
@@ -68,13 +68,13 @@ class AreaDistricts extends React.Component {
         districtsPincode(state, district)
             .then(res => {
 
-               // console.log('res', res);
                 const pincodeList = {
                     PostOffice: res.data,
                     Status: res.status
                 };
+                
                 const numRows = res.count;
-                this.setState({ pincodes: pincodeList, isFlag: true, count: numRows });
+                this.setState({ pincodes: pincodeList, isFlag: true, isloder: false, count: numRows });
 
             });
     }
@@ -84,12 +84,12 @@ class AreaDistricts extends React.Component {
 
     render() {
         
-        // const numRows = membersToRender.length
+        const URL = window.location.href;
         const isFlag = this.state.isFlag;
         const Status = this.state.pincodes.Status;
         const Message = '';
 
-
+       
         const transform = (name) => {
             let str = name.replaceAll(/ /ig, "-");
             let str1 = str.replace(/[^a-zA-Z0-9]/g, '-');
@@ -104,17 +104,29 @@ class AreaDistricts extends React.Component {
             localStorage.setItem('row', JSON.stringify(row));
         }
 
+        let content = ''
+        if (this.state.isloder) { 
+          content = <div id="pre-loader" className="pre-loader">  <img src="/loading.gif" title='Fetching...' /></div>
+        } 
+
      
 
         if (!isFlag) {
             return (
                 <div className="container-fluid bg-grey">
+                    <Helmet>
+                        <title>{this.dist} Pin Codes List – {this.stateName } Post offices Address | SearchMyPincode </title>
+                        <meta name="description" content={`Find all ${this.dist} pin codes list and ${this.dist}, ${localStorage.getItem('state')} post offices address at searchmypincode.in`} />
+                        <meta name="keywords" content={` ${this.dist} pin code, ${this.dist} pin code list, ${this.dist} post office address, ${this.dist} postal code, district ${this.dist} zip code, ${localStorage.getItem('state')} pin code`} />
+                        <meta http-equiv="Content-Language" content="English" />
+                        <link href={`${URL}`} rel="canonical" />
+                    </Helmet>
                     <div className="row">
                         <div className="col-sm-2">
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
-                            404 NOT FOUND
+                            {content}
                         </div>
                         <div className="col-sm-2">
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
@@ -135,6 +147,7 @@ class AreaDistricts extends React.Component {
                         <meta name="description" content={`Find all ${this.dist} pin codes list and ${this.dist}, ${localStorage.getItem('state')} post offices address at searchmypincode.in`} />
                         <meta name="keywords" content={` ${this.dist} pin code, ${this.dist} pin code list, ${this.dist} post office address, ${this.dist} postal code, district ${this.dist} zip code, ${localStorage.getItem('state')} pin code`} />
                         <meta http-equiv="Content-Language" content="English" />
+                        <link href={`${URL}`} rel="canonical" />
                     </Helmet>
 
 
@@ -208,6 +221,13 @@ Following are the list of {this.dist} pin codes:</p>
 
             return (
                 <div className="container-fluid bg-grey">
+                    <Helmet>
+                        <title>{this.dist} Pin Codes List – {this.stateName } Post offices Address | SearchMyPincode </title>
+                        <meta name="description" content={`Find all ${this.dist} pin codes list and ${this.dist}, ${localStorage.getItem('state')} post offices address at searchmypincode.in`} />
+                        <meta name="keywords" content={` ${this.dist} pin code, ${this.dist} pin code list, ${this.dist} post office address, ${this.dist} postal code, district ${this.dist} zip code, ${localStorage.getItem('state')} pin code`} />
+                        <meta http-equiv="Content-Language" content="English" />
+                        <link href={`${URL}`} rel="canonical" />
+                    </Helmet>
                     <div className="row">
                         <div className="col-sm-3">
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>

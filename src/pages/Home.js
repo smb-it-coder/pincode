@@ -7,11 +7,18 @@ import TwoDigitPincodeBelongsToState from '../components/util/twoDigitPincodeBel
 import { Helmet } from "react-helmet";
 
 const Home = () => {
+
+  const URL = window.location.href;
+
   return (
     <div className="App">
       <Helmet>
-        <title>Home page title by me.</title>
-      </Helmet>
+      <title>Location PIN Code | India Pincode Number | Search My Pincode </title>
+      <meta name="description" content={`Find PIN code and post office details for any location, area, village, city, district or state in India at SearchMyPincode.`} />
+      <meta name="keywords" content={`My location pincode, area pincode, city pin code, pin code search, my pin code, pin code India, pin code of my current location, India postal index number, 6 digit pin code`}  />
+      <link href={`${URL}`} rel="canonical" />
+      <meta http-equiv="Content-Language" content="English" />           
+    </Helmet>
       <NavTop />
       <Hbreadcrum />
       <BodyForHome />

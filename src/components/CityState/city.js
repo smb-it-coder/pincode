@@ -11,6 +11,8 @@ import row from '../../Services/rowContent.service';
 function CityState() {
 
     const [districts , setDistricts] = useState([]);
+    const [isloder , setIsloder] = useState([true]);
+   // setIsloder(true);
     let { state } = useParams();
     const stateName = (state.replaceAll(/-Pincode/ig, "")).replaceAll(/-/ig, " ");
     localStorage.setItem('state', stateName);
@@ -18,7 +20,6 @@ function CityState() {
     const removeEntity = (item) =>{
         if(localStorage.getItem(item)){
             localStorage.removeItem(item);
-
         } else {
             return false;
         }
@@ -47,6 +48,7 @@ function CityState() {
             async function fetchData() {
                 const cityOption = await getCityByState(stateName);
                 setDistricts(cityOption.data);
+                setIsloder(false);
             }
 
             fetchData();
@@ -55,15 +57,21 @@ function CityState() {
         []);
    
   
-///console.log('districts', districts);
+  const URL = window.location.href;
+  let content = ''
+  if (isloder) {
+    content = <div id="pre-loader" className="pre-loader">  <img src="/loading.gif" title='Fetching...' /></div>
+  } 
+
+
     return (
-        <Fragment>
+        <>
             <Helmet>
                 <title>  Find {stateName} Pin Codes List – All Districts Post office details | SearchMyPincode </title>
                 <meta name="description" content={`Find all ${stateName} pin codes list and all districts post office details at SearchMyPincode.in`} />
                 <meta name="keywords" content={`${stateName} pin code list, ${stateName} post offices list, ${stateName} postal code, ${stateName} zip code, ${stateName} postal index number,  `} />
                 <meta http-equiv="Content-Language" content="English" />
-                   
+                <link href={` ${URL}`} rel="canonical" />
             </Helmet>
             <div className="container-fluid bg-grey">
                 <div className="row">
@@ -92,7 +100,6 @@ function CityState() {
                         </div>
 
 
-
                         <div className="row">
                             <div className="col-sm-10">
                                 <Table striped bordered hover size="sm">
@@ -103,10 +110,10 @@ function CityState() {
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                      {content}
                                         {districts.map((city) => (
                                             <tr key={city.district} >
-                                                <td>&nbsp; <a className="text-decoration-none"  href={`/${transform(city.district)}-pincode`}  onClick={() => setEntity(city.district)}  > {city.district} </a> </td>
+                                                <td>&nbsp; <a className="text-decoration-none" href={`/${transform(city.district)}-pincode`} onClick={() => setEntity(city.district)}  > {city.district} </a> </td>
                                                 <td>&nbsp;  {stateName} </td>
                                             </tr>
                                         ))
@@ -117,12 +124,15 @@ function CityState() {
                             </div>
                         </div>
                         <div className="row">
-                        <h2>{stateName} Pin Code related FAQ</h2>
-                        <h3>Q: How many post offices are there in {stateName} ?</h3>
-                        <p>Ans: There are total number of post offices in {stateName} </p>
-                        <h3>Q: How many pincodes are there in {stateName}</h3>
-                        <p>Ans: There are total number pincodes based on {districts.length} in {stateName}, India.</p>
+                            <h2>{stateName} Pin Code related FAQ</h2>
+                            <h3>Q: How many post offices are there in {stateName} ?</h3>
+                            <p>Ans: There are total number of post offices in {stateName} </p>
+                            <h3>Q: How many pincodes are there in {stateName}</h3>
+                            <p>Ans: There are total number pincodes based on {districts.length} in {stateName}, India.</p>
                         </div>
+                        
+                      
+              
 
                     </div>
 
@@ -131,7 +141,7 @@ function CityState() {
                     </div>
                 </div>
             </div>
-        </Fragment>
+        </>
     );
 }
 

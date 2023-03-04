@@ -2,6 +2,9 @@ import React, { useState, useEffect, Component } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import getPincodeDataByCode from '../../Services/pincodeByCode.service';
 import { Helmet } from "react-helmet";
+
+import Table from 'react-bootstrap/Table';
+import Alert from 'react-bootstrap/Alert';
 function withParams(Component) {
     return props => <Component {...props} params={useParams()} />;
 }
@@ -31,12 +34,12 @@ class PostOfficeByPincode extends React.Component {
                
                 if(res.status === 404){
                     let pincodeList = {
-                        Message: '',
+                        Message: res,
                         PostOffice: [],
                         Status: res.status
                     };
                     let numRows =  0;
-                    this.setState({ pincodes: pincodeList, isFlag: false, count: numRows || 0 });
+                    this.setState({ pincodes: pincodeList, isFlag: true, count: numRows || 0 });
 
                 } else {
                     let pincodeList = {
@@ -62,9 +65,13 @@ class PostOfficeByPincode extends React.Component {
         const isFlag = this.state.isFlag;
         const Status = this.state.pincodes.Status;
         const Message = this.state.pincodes.Message;
+       
 
 
-        if (!isFlag) {
+        if (!isFlag && Status !== 404) {
+            
+         
+            
             return (
                 <div className="container-fluid bg-grey">
                     <div className="row">
@@ -72,7 +79,7 @@ class PostOfficeByPincode extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
-                            <h3>Pincode data not found for {this.state.pincode}  </h3>
+                        <div id="pre-loader" className="pre-loader">  <img src="/loading.gif" title='Fetching...' /></div>
                             <p><br />  </p>
                         </div>
                         <div className="col-sm-2">
@@ -83,39 +90,71 @@ class PostOfficeByPincode extends React.Component {
             );
         }
 
-        if (isFlag && Status !== 'Error') {
-           // console.log('PostOffice ===> ', PostOffice);
-              let stateName = PostOffice[0].state;
-              const stateLink =  stateName.replaceAll(/ /ig, "-");
+        if (isFlag && Status !== 404) {
+          
+              let stateName = (Status == 404) ? '' : PostOffice[0].state;
+              const stateLink =  stateName?stateName.replaceAll(/ /ig, "-"):null;
             return (
                 <div className="container-fluid bg-grey">
+                    <Helmet>
+                        <title>Pincode: {this.state.pincode?this.state.pincode:'' }, Get list of all Post Offices for {PostOffice[0].district?PostOffice[0].district :'' } | SearchMyPincode</title>
+                        <meta name="description" content={`Find list of all post offices for Pin code ${this.state.pincode?this.state.pincode:'' } for ${PostOffice[0].district?PostOffice[0].district :'' } at Searchmypincode.in`} />
+                        <meta name="keywords" content={` pincode, pincode ${this.state.pincode?this.state.pincode:'' }, ${this.state.pincode?this.state.pincode:'' } details, ${this.state.pincode?this.state.pincode:'' } list, ${this.state.pincode?this.state.pincode:'' } post offices`} />
+                        <link href={`${URL}`} rel="canonical" />
+                        <meta http-equiv="Content-Language" content="English" />
+                    </Helmet>
                     <div className="row">
                         <div className="col-sm-2">
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
-                            <h3> <strong>Pincode : {this.state.pincode}</strong>  </h3>
+                            <h1>Details of pin code: {this.state.pincode}</h1>
 
                             <div className="row">
-                                <p>Total number of {this.state.count} post offices linked with pincode <strong>{this.state.pincode}</strong> .
-                                    This postal index number belongs to
-                                    <Link to={`#`}> <strong>{PostOffice[0].District}</strong></Link>  District
-                                    of      <Link to={`/${stateLink}-pincode`}> <strong>{PostOffice[0].State}</strong></Link> in India.
-                                </p>
-
+                            <p>Pin Code {this.state.pincode} belongs to district {PostOffice[0].district}, {PostOffice[0].state}, India. There are {this.state.count} of post offices for pincode {this.state.pincode}.
+                                  Following are the list of all post offices for pin code {this.state.pincode}</p>
                             </div>
                             <div className="row">
-                                <strong> List of Post Offices holding Pincode {this.state.pincode}</strong>
+                            <h2>Details of post offices for pin code {this.state.pincode}:</h2>
+
                             </div>
+                           
+
                             <div className="row">
-                                <p>Given below is the list of all post offices resulting to pincode number {this.state.pincode} &nbsp; :-</p>
-                                {PostOffice.map((pincode) => (
-                                    <div className="col-sm-6" key="{pincode.id}"><strong>{pincode.village} </strong>, {pincode.office} {pincode.subdistrict} </div>
-                                ))}
-
-
+                            <div className="col-sm-12">
+                            <Table striped bordered hover size="sm">
+                                    <thead>
+                                        <tr>
+                                            
+                                            <th>Pincode</th>
+                                            <th>Place</th>
+                                            <th>Subdistrict</th>
+                                            <th>District</th>
+                                            <th>state</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {PostOffice.map((similar) => (
+                                            <tr key={similar.id} >
+                                                <td>&nbsp; {similar.pincode} </td>
+                                                <td>&nbsp; {similar.village} ,<strong>{similar.office}</strong> </td>
+                                                <td>&nbsp; {similar.subdistrict?similar.subdistrict:'NA'} </td>
+                                                <td>&nbsp; {similar.district} </td>
+                                                <td>&nbsp; {similar.state} </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </Table>
                             </div>
+                        </div>
                             <div className="row">&nbsp;</div>
+                            <div className="row">
+                                <h2>Pin Code or Postal Code {this.state.pincode} FAQs</h2>
+                                <h3>Q: How many post offices are there for pin code {this.state.pincode}?</h3>
+                                <p>Ans: There are {this.state.count} post offices for pin code {this.state.pincode}.</p>
+                                <h3>Q: Pin code number {this.state.pincode} is for which area?</h3>
+                                <p>Ans: Pincode {this.state.pincode} is for {PostOffice[0].village}, {PostOffice[0].office}. It is located in {PostOffice[0].district}.</p>
+                            </div>
                             <div className="row">&nbsp;</div>
                         </div>
 
@@ -131,7 +170,7 @@ class PostOfficeByPincode extends React.Component {
 
         }
 
-        if (isFlag && Status === 'Error') {
+        if (isFlag && (Status === 'Error' ||  Status == 404)) {
 
             return (
                 <div className="container-fluid bg-grey">
@@ -140,14 +179,7 @@ class PostOfficeByPincode extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-6">
-                            <h2 className='center'>PIN CODES SEARCH.</h2>
-                            <h3>Found result for {this.state.pincode}  </h3>
-                            <p> {this.state.pincode} : - View all pincode result for this postal code.</p>
-
-                            <div className="row">
-                                {Message}
-                            </div>
-
+                            <div className="row">   Pincode not found! </div>
                             <p><br />  </p>
                         </div>
 

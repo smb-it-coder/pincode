@@ -22,20 +22,21 @@ function BodyForHome() {
         event.preventDefault();
         setSubmitting(true);
         const search = event.target.elements.q.value;
-        const path = `search?q=${search}`;
-        navigate(path);
+        if (!isNaN(search)) {
+            let path = `pincode/${search}`;
+            navigate(path);
+        } else {
+            let path = `search?q=${search}`;
+             navigate(path);
+        }
+       
 
     }
+   
 
     return (
         <Fragment>
-             <Helmet>
-                <title>Location PIN Code | India Pincode Number | Search My Pincode </title>
-                <meta name="description" content={`Find PIN code and post office details for any location, area, village, city, district or state in India at SearchMyPincode.`} />
-                <meta name="keywords" content={`my location pincode, area pincode, city pin code, pin code search, my pin code, pin code India, pin code of my current location, India postal index number, 6 digit pin code`}  />
-                <link href="/" rel="canonical" />
-                <meta http-equiv="Content-Language" content="English" />           
-            </Helmet>
+            
             <div className="container-fluid bg-grey">
                 <div className="row">
                     <div className="col-sm-2">
@@ -63,31 +64,20 @@ function BodyForHome() {
 
                         <div >
                             <h3>
-
                                 {['warning'].map((variant) => (
                                     <Alert key={variant} variant={variant}>
                                         <h2>State Wise Select Your State For Pin code  :</h2>
                                     </Alert>
                                 ))}
                             </h3>
-
-
                             <SelectState />
-
                         </div>
-
                         <div className="row">&nbsp; </div>
-
-                        
-                       
-
                     </div>
-
                     <div className="col-sm-2">
                         <span className="glyphicon glyphicon-globe logo slideanim"></span>
                     </div>
                 </div>
-                
             </div>
         </Fragment>
     );

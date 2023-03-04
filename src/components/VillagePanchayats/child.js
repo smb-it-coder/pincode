@@ -11,6 +11,7 @@ import getPincodeByLocation from '../../Services/pincodeByLocation.service';
 function ChildComponent() {
 
 const [similarcontent , setSimilarcontent] = useState([]);
+const [isloder , setIsloder] = useState([true]);
 const params = useParams();
 const area = params.area;
 const location = area ? ((area.replace(/pincode/g, "")).replaceAll(/-/ig, " ")).replace(/ s o/g, ""):'';
@@ -20,17 +21,22 @@ const location = area ? ((area.replace(/pincode/g, "")).replaceAll(/-/ig, " ")).
   const district = localStorage.getItem("district");
   const stateName = localStorage.getItem("state");
   const childEntity = JSON.parse(localStorage.getItem("row")) ?JSON.parse(localStorage.getItem("row")) :[];
-
-    useEffect( () => {
-            async function similarDataFetch() {
-                let localArea = place?place[0]:location
-                let pincodeData = await getPincodeByLocation(localArea);
-                setSimilarcontent(pincodeData.data);
-            }
-            similarDataFetch();
-        },
-        []);
+  
+    useEffect(() => {
+        async function similarDataFetch() {
+            let localArea = place ? place[0] : location
+            let pincodeData = await getPincodeByLocation(localArea);
+            setSimilarcontent(pincodeData.data);
+        }
+        similarDataFetch();
+        setIsloder(false);
+    }, []);
    
+    const URL = window.location.href;
+    let content = ''
+    if (isloder) { 
+      content = <div id="pre-loader" className="pre-loader">  <img src="/loading.gif" title='Fetching...' /></div>
+    } 
   
     return (
         <Fragment>
@@ -39,7 +45,7 @@ const location = area ? ((area.replace(/pincode/g, "")).replaceAll(/-/ig, " ")).
                 <meta name="description" content={`Find ${childEntity.village}  Pin Codes and ${childEntity.village} Near by Area PIN Codes. Search all pin codes of ${childEntity.village} location, ${childEntity.district}.`} />
                 Keywords: 
                 <meta name="keywords" content={`${childEntity.village} PIN Code, ${childEntity.village}   zip code,  ${childEntity.village}  postal code, ${childEntity.district} PIN Code, ${childEntity.state} PIN Code, ${childEntity.village}   area pin code, search my pincode`}  />
-                <link href="https://url.com" rel="canonical" />
+                <link href={`${URL}`} rel="canonical" />
                 <meta http-equiv="Content-Language" content="English" />           
             </Helmet>
             <div className="container-fluid bg-grey">
@@ -115,6 +121,7 @@ const location = area ? ((area.replace(/pincode/g, "")).replaceAll(/-/ig, " ")).
                                         </tr>
                                     </thead>
                                     <tbody>
+                                       {content}
                                         {similarcontent.map((similar) => (
                                             <tr key={similar.id} >
                                                 <td>&nbsp; {similar.pincode} </td>

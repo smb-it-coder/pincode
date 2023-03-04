@@ -5,13 +5,18 @@ import Footer from '../components/nav/footer';
 import { Helmet } from "react-helmet";
 
 const About = () => {
+    const URL = window.location.href;
     return (
         <div className="App">
             <NavTop />
             <Aboutbreadcrum />
             <div>
                 <Helmet>
-                    <title>About us page- </title>
+                <title>About Us | About | Search My Pincode </title>
+                <meta name="description" content={`About us SearchMyPincode.`} />
+                <meta name="keywords" content={`About us`}  />
+                <link href={`${URL}`} rel="canonical" />
+                <meta http-equiv="Content-Language" content="English" />  
                 </Helmet>
             </div>
 
