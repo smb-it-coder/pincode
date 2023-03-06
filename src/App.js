@@ -23,7 +23,7 @@ function App() {
         <Route path='/pincode/:pincode' element={<PostOffice />} />
         <Route path='/state/:state' element={<State />} />
         <Route path='/:area' element={<Area />} />
-        <Route path='/v/:area' element={<Child />} />
+        <Route path='/pin-code/:area' element={<Child />} />
         <Route path='/about' element={<About/>} />
       </Routes>
     </BrowserRouter>

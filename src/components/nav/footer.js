@@ -3,12 +3,12 @@ import React from "react";
 function Footer() {
     return (
 
-        <div className="fixed-bottom">
+        <div className="footer">
             <section className="bg-dark">
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-12">
-                            <h6 className="text-white text-center mb-3 mt-3">Copyright @ Loreal Ipsom Rights Reserved</h6>
+                            <h6 className="text-white text-center mb-3 mt-3">Copyright @ SearchMyPincode Rights Reserved</h6>
                         </div>
                     </div>
                 </div>

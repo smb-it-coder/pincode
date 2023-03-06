@@ -1,4 +1,5 @@
 export const API_PATH = "http://31.187.72.248:8080/api";
+
 export const API_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJTdUFkbWluIiwiaWF0IjoxNjc3NzIzNzk5LCJleHAiOjE2ODAzMTU3OTl9.BgMbaVHXTbArXbv3pMRCqXulraiv_giCueUXogp-7k0";
 export const NAMESPACE = "SearchMyPincode"
 export const NAMESPACE_TITLE = `Delhi Pin Code, Delhi Post Office Postal Codes | ${NAMESPACE}`;

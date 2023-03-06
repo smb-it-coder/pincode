@@ -1,6 +1,6 @@
 import NavTop from '../components/nav/fixedTop';
 import Abreadcrum from '../components/breadcrum/abreadcrum';
-import AreaComponent from '../components/VillagePanchayats/area';
+import AreaDistricts from '../components/VillagePanchayats/area';
 import Footer from '../components/nav/footer';
 
 const Area = () => {
@@ -17,7 +17,7 @@ const Area = () => {
     <div className="App">
        <NavTop /> 
        <Abreadcrum />
-       <AreaComponent/>
+       <AreaDistricts/>
        <Footer />
     </div>
   );

@@ -92,9 +92,7 @@ class AreaDistricts extends React.Component {
        
         const transform = (name) => {
             let str = name.replaceAll(/ /ig, "-");
-            let str1 = str.replace(/[^a-zA-Z0-9]/g, '-');
-            let city =  str1 + '-pincode';
-
+            let city = str.replace(/[^a-zA-Z0-9]/g, '-');
             return (city.toLowerCase()).replaceAll(/--/ig, "-");
         }
 
@@ -178,7 +176,7 @@ Following are the list of {this.dist} pin codes:</p>
                                         {locations.map((area) => (
                                             <tr key={area.id} >
                                                 <td>&nbsp; <a class="text-decoration-none"
-                                                 href={`/v/${transform(area.village + '-' + area.office)}`}
+                                                 href={`/pin-code/${transform(area.slug)}`}
                                                  onClick={() => setEntity(area.id, area.village, area)}
                                                 >{area.village} ,  {area.office}</a> </td>
                                                 <td>&nbsp; {area.pincode} </td>
