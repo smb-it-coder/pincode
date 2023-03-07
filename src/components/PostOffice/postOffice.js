@@ -30,30 +30,26 @@ class PostOfficeByPincode extends React.Component {
 
         getPincodeDataByCode(this.state.pincode)
             .then(res => {
-                
-               
-                if(res.status === 404){
-                    let pincodeList = {
-                        Message: res,
-                        PostOffice: [],
-                        Status: res.status
-                    };
-                    let numRows =  0;
-                    this.setState({ pincodes: pincodeList, isFlag: true, count: numRows || 0 });
 
-                } else {
-                    let pincodeList = {
-                        Message: '',
-                        PostOffice: res.data,
-                        Status: res.status
-                    };
-                    let numRows =  res.count;
-                    this.setState({ pincodes: pincodeList, isFlag: true, count: numRows || 0 });
-
-                }
-                
+                let pincodeList = {
+                    Message: '',
+                    PostOffice: res.data,
+                    Status: res.status
+                };
+                let numRows =  res.count;
+                this.setState({ pincodes: pincodeList, isFlag: true, count: numRows || 0 });
                
 
+            }).catch((err) => {
+                let pincodeList = {
+                    Message: '',
+                    PostOffice: [],
+                    Status: 404
+                };
+                let numRows =  0;
+                this.setState({ pincodes: pincodeList, isFlag: true, count: numRows || 0 });
+
+                window.location = '/404';
             });
     }
 
@@ -171,7 +167,7 @@ class PostOfficeByPincode extends React.Component {
         }
 
         if (isFlag && (Status === 'Error' ||  Status == 404)) {
-
+            window.location = '/404';
             return (
                 <div className="container-fluid bg-grey">
                     <div className="row">

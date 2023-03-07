@@ -15,7 +15,9 @@ class AreaDistricts extends React.Component {
 
     constructor(props) {
         super(props);
-        let { area } = this.props.params;
+        let { state, area } = this.props.params;
+       
+        let stateAlias = state.replaceAll(/-/ig, " ");
        const linkPath =  area.split("-pincode");
        const district = (linkPath[0]).replaceAll(/-/ig, " ");
        this.dist = this.capitalizeFirstLetter(district);
@@ -23,7 +25,9 @@ class AreaDistricts extends React.Component {
        this.dist_pincode = 'NA';
       
        localStorage.setItem('district', district);
-       this.stateName = localStorage.getItem('state');
+       localStorage.setItem('state', stateAlias);
+       this.stateName = stateAlias?stateAlias: localStorage.getItem('state');
+       this.stateName =  this.stateName.replaceAll(/ and /ig, " & ")
        const removeEntity = (item) =>{
             if (localStorage.getItem(item)) {
                 localStorage.removeItem(item);
@@ -63,10 +67,16 @@ class AreaDistricts extends React.Component {
 
     pincodeRead() {
 
-        let state = localStorage.getItem('state');
+        
+        let state = this.stateName?this.stateName:localStorage.getItem('state');
         let district = localStorage.getItem('district')
+       
         districtsPincode(state, district)
             .then(res => {
+              
+                if(res.status === 404){
+                    window.location = '/404';
+                }
 
                 const pincodeList = {
                     PostOffice: res.data,
@@ -76,6 +86,14 @@ class AreaDistricts extends React.Component {
                 const numRows = res.count;
                 this.setState({ pincodes: pincodeList, isFlag: true, isloder: false, count: numRows });
 
+            }).catch((err) => {
+                let pincodes = {
+                    PostOffice: [],
+                    Status: 404
+                };
+                this.setState({ pincodes: pincodes, isFlag: true, isloder: false, count: 0 });
+
+                window.location = '/404';
             });
     }
 

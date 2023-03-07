@@ -9,6 +9,7 @@ import Area from './pages/Area';
 //import District from './pages/District';
 import Child from './pages/Child';
 import About from './pages/About';
+import Notfound from './pages/404';
 
 function App() {
  
@@ -22,9 +23,10 @@ function App() {
         <Route path='/state/:district/:block/:area/' element={<Village />} />
         <Route path='/pincode/:pincode' element={<PostOffice />} />
         <Route path='/state/:state' element={<State />} />
-        <Route path='/:area' element={<Area />} />
+        <Route path='/:state/:area' element={<Area />} />
         <Route path='/pin-code/:area' element={<Child />} />
         <Route path='/about' element={<About/>} />
+        <Route path='/404' element={<Notfound/>} />
       </Routes>
     </BrowserRouter>
   );

@@ -96,7 +96,7 @@ class DataForPincode extends React.Component {
             );
         }
 
-        if (isFlag && Status !== 'Error') {
+        if (isFlag && Status ==  200) {
             const PostOffice = this.state.pincodes.PostOffice;
             console.log('render () -> PostOffice', this.state.pincodes);
             return (
@@ -178,7 +178,7 @@ class DataForPincode extends React.Component {
 
         }
 
-        if (isFlag && Status === 'Error') {
+        if (isFlag && Status === 404) {
 
             return (
                 <div className="container-fluid bg-grey">
@@ -187,13 +187,8 @@ class DataForPincode extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-6">
-
-                            <h2 className='center'>PIN CODES SEARCH.</h2>
-                            <h3>Found result for {this.state.keyword}  </h3>
-                            <p> {this.state.keyword} : - View all pincode result for this postal code.</p>
-
                             <div className="row">
-                                {Message}
+                             404  Not Found!
                             </div>
 
                             <p><br />  </p>

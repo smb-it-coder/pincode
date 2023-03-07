@@ -14,6 +14,10 @@ export default async function getCityByState(state) {
         status: res.status?res.status:404
       };
 
+      if(result.status === 404) {
+        window.location = '/404';
+      }
+
       return result;
 
     } catch (err) {

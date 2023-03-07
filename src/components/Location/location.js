@@ -46,6 +46,8 @@ class Location extends React.Component {
 
                 this.setState({ pincodes: pincodeList, isFlag: true});
 
+            }).catch((err) => {
+                window.location = '/404';
             });
     }
 

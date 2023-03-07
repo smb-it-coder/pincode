@@ -39,6 +39,7 @@ function CityState() {
 
     
    function transform (name) { 
+   // alert(name);
       let str = name.replaceAll(/ /ig, "-"); 
     return   str.toLowerCase();
 }  
@@ -46,9 +47,14 @@ function CityState() {
     useEffect(
         () => {
             async function fetchData() {
-                const cityOption = await getCityByState(stateName);
+                let stateAnd =   stateName.replaceAll(/ and /ig, " & ");
+                const cityOption = await getCityByState(stateAnd);
                 setDistricts(cityOption.data);
                 setIsloder(false);
+               
+                if((cityOption.data).length < 1){
+                    window.location = '/404';
+                  }
             }
 
             fetchData();
@@ -63,6 +69,7 @@ function CityState() {
     content = <div id="pre-loader" className="pre-loader">  <img src="/loading.gif" title='Fetching...' /></div>
   } 
 
+  
 
     return (
         <>
@@ -113,8 +120,8 @@ function CityState() {
                                       {content}
                                         {districts.map((city) => (
                                             <tr key={city.district} >
-                                                <td>&nbsp; <a className="text-decoration-none" href={`/${transform(city.district)}-pincode`} onClick={() => setEntity(city.district)}  > {city.district} </a> </td>
-                                                <td>&nbsp;  {stateName} </td>
+                                                <td>&nbsp; <a className="text-decoration-none" href={`/${transform(stateName)}/${transform(city.district)}-pincode`} onClick={() => setEntity(city.district)}  > {city.district} </a> </td>
+                                                <td>&nbsp;  {stateName.replaceAll(/ and /ig, " & ")} </td>
                                             </tr>
                                         ))
                                         }

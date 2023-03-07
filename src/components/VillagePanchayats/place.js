@@ -9,6 +9,7 @@ import Alert from 'react-bootstrap/Alert';
 import getPincodeByLocation from '../../Services/pincodeByLocation.service';
 import getPincodeBySlug from '../../Services/pincodeBySlug.service';
 import * as __CONSTA from '../../Services/consta';
+import { useHistory } from "react-router-dom";
 
 function withParams(Component) {
     return props => <Component {...props} params={useParams()} />;
@@ -19,14 +20,14 @@ class Place extends React.Component {
     constructor(props) {
         super(props);
         let { area } = this.props.params;
-       
-      // this.dist = this.capitalizeFirstLetter(district);
-       this.dist_address = 'NA';
-       this.dist_pincode = 'NA';
-       this.slug = area;
-      
-       
-       const removeEntity = (item) =>{
+
+        // this.dist = this.capitalizeFirstLetter(district);
+        this.dist_address = 'NA';
+        this.dist_pincode = 'NA';
+        this.slug = area;
+
+
+        const removeEntity = (item) => {
             if (localStorage.getItem(item)) {
                 localStorage.removeItem(item);
             } else {
@@ -37,8 +38,8 @@ class Place extends React.Component {
         removeEntity('childId');
         removeEntity('childName');
         removeEntity('row');
-       
-       console.log(' level 3 ', localStorage);
+
+        console.log(' level 3 ', localStorage);
 
         this.state = {
             pincodes: [],
@@ -49,75 +50,83 @@ class Place extends React.Component {
             similar: [],
         }
 
-       // const [isloder , setIsloder] = useState([true]);
+        // const [isloder , setIsloder] = useState([true]);
 
     }
 
 
-     capitalizeFirstLetter(str) {
+    capitalizeFirstLetter(str) {
         const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
         return capitalized;
     }
-    
+
 
     componentDidMount() {
         this.pincodeBySlug();
-        this.similarDataFetch();
-       // setTimeout(function() { this.similarDataFetch(); }, 3000);
     }
 
     pincodeBySlug() {
+        //  const history = useHistory();
 
         getPincodeBySlug(this.slug)
             .then(res => {
+
                 const pincodeList = {
                     PostOffice: res.data,
                     Status: res.status
                 };
-                
-                const numRows = res.count;
+
+                const numRows = (res.data).length;
+               // alert('numRows ==>'+res.status);
                 localStorage.setItem('district', res.data[0].district);
-                localStorage.setItem('state',res.data[0].state);
+                localStorage.setItem('state', res.data[0].state);
                 this.setState({ pincodes: pincodeList, isFlag: true, isloder: false, count: numRows });
+                this.similarDataFetch();
+
+            }).catch((err) => {
+                let pincodes = {
+                    PostOffice: [],
+                    Status: 404
+                };
+                this.setState({ pincodes: pincodes, isFlag: true, isloder: false, count: 0 });
+
+                window.location = '/404';
             });
     }
 
     similarDataFetch() {
-        const location = this.slug.split("-");
-   
-         getPincodeByLocation(location[0]).then(res => {
+
+        const location = (this.slug.replace(/-pincode/g, "")).split("-");
+
+        getPincodeByLocation(location[location.length - 1]).then(res => {
             const similar = {
                 similar: res.data,
                 status: res.status,
-                numRows : res.count,
+                numRows: res.count,
             };
-           // alert('hhhh');
-            
-            this.setState({similar: similar});
+            this.setState({ similar: similar });
 
         });
-       
+
     }
 
-  
 
 
     render() {
-        
+
         const URL = window.location.href;
         const isFlag = this.state.isFlag;
         const Status = this.state.pincodes.Status;
-       
-       
 
         let content = ''
-        if (this.state.isloder) { 
-          content = <div id="pre-loader" className="pre-loader">  <img src="/loading.gif" title='Fetching...' /></div>
-        } 
+        if (this.state.isloder) {
+            content = <div id="pre-loader" className="pre-loader">  <img src="/loading.gif" title='Fetching...' /></div>
+        }
 
-     
 
-        if (!isFlag && Status !== 404) {
+
+        if (!isFlag && (Status !== 404 || Status !== 200)) {
+
             return (
                 <div className="container-fluid bg-grey">
                     <div className="row">
@@ -125,7 +134,7 @@ class Place extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
-                        <div id="pre-loader" className="pre-loader">  <img src="/loading.gif" title='Fetching...' /></div>
+                            <div id="pre-loader" className="pre-loader">  <img src="/loading.gif" title='Fetching...' /></div>
                         </div>
                         <div className="col-sm-2">
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
@@ -135,21 +144,21 @@ class Place extends React.Component {
             );
         }
 
-        if (isFlag && Status !== 'Error') {
+        if (isFlag && Status === 200) {
 
-             const places = this.state.pincodes.PostOffice;
-             const similar = this.state.similar;
-             console.log('  similar  ', similar);
-             const  similarcontent = similar.similar?similar.similar:[];
-             console.log('  similarcontent  ', similarcontent);
+            const places = this.state.pincodes.PostOffice;
+            const similar = this.state.similar;
+            console.log('  similar  ', similar);
+            const similarcontent = similar.similar ? similar.similar : [];
+            console.log('  similarcontent  ', similarcontent);
 
-            const keySlug =  this.slug.split("-");
-            
+            const keySlug = this.slug.split("-");
+
 
             return (
-               
+
                 <div className="container-fluid bg-grey">
-                     <Helmet>
+                    <Helmet>
                         <title>{places[0].village}  Pin Code - {places[0].village} , {places[0].district} Post Office Area PIN Codes | {__CONSTA.NAMESPACE} </title>
                         <meta name="description" content={`Find ${places[0].village}  Pin Codes and ${places[0].village} Near by Area PIN Codes. Search all pin codes of ${places[0].village} location, ${places[0].district}.`} />
                         Keywords:
@@ -164,101 +173,101 @@ class Place extends React.Component {
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
                         </div>
                         <div className="col-sm-8">
-                        <h1>{places[0].village} Pincode {places[0].pincode}</h1>
-                        <div className="row">
-                            <p>{places[0].village} Pin Code is {places[0].pincode}. Pin Code or Zip Code is also known as Postal Code.
-                            {places[0].village} is located in district {places[0].district},  {places[0].state} in india.
-                                Following are the details of {places[0].village}pin code:</p></div>
-                        <div className="row">&nbsp;</div>
-
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <h2>Details of post office {places[0].village} : </h2>
-                                {['warning'].map((variant) => (
-                                    <Alert key={variant} variant={variant}>
-                                        <strong> {places[0].pincode} ( {places[0].village} {places[0].office} ) </strong>
-                                    </Alert>
-                                ))}
-
-                            </div>
-                        </div>
-                       
-
+                            <h1>{places[0].village} Pincode {places[0].pincode}</h1>
                             <div className="row">
-                            <div className="col-sm-10">
-
-                            <Table striped bordered hover size="sm">
-                                    <thead>
-                                        <tr>
-                                            <th>Place</th>
-                                            <th>Pincode</th>
-                                            <th>office</th>
-                                            <th>Subdistrict</th>
-                                            <th>District</th>
-                                            <th>state</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody> {content}
-                                        {places.map((area) => (
-                                         <tr key={area.id} >
-                                            <td>{area.village}   </td>
-                                            <td>&nbsp; <a class="text-decoration-none"
-                                                 href={`/pincode/${area.pincode}`}
-                                                >{area.pincode}</a>  </td>
-                                            <td>&nbsp; <strong>{area.office}</strong> </td>
-                                            <td>&nbsp; {area.subdistrict ? area.subdistrict : 'NA'} </td>
-                                            <td>&nbsp; {area.district} </td>
-                                            <td>&nbsp; {area.state} </td>
-                                        </tr>
-
-                                        )) }
-
-                                    </tbody>
-                                </Table>
-                               
-                            </div>
-                        </div>
+                                <p>{places[0].village} Pin Code is {places[0].pincode}. Pin Code or Zip Code is also known as Postal Code.
+                                    {places[0].village} is located in district {places[0].district},  {places[0].state} in india.
+                                    Following are the details of {places[0].village}pin code:</p></div>
                             <div className="row">&nbsp;</div>
 
                             <div className="row">
-                            <div className="col-sm-12">
-                                {['warning'].map((variant) => (
-                                    <Alert key={variant} variant={variant}>
-                                        <h2>Similar locations ({keySlug[0]}) across all places  :</h2>
-                                    </Alert>
-                                ))}
+                                <div className="col-sm-12">
+                                    <h2>Details of post office {places[0].village} : </h2>
+                                    {['warning'].map((variant) => (
+                                        <Alert key={variant} variant={variant}>
+                                            <strong> {places[0].pincode} ( {places[0].village} {places[0].office} ) </strong>
+                                        </Alert>
+                                    ))}
+
+                                </div>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <Table striped bordered hover size="sm">
-                                    <thead>
-                                        <tr>
-                                            
-                                            <th>Place</th>
-                                            <th>Daak Khana</th>
-                                            <th>Subdistrict</th>
-                                            <th>District</th>
-                                            <th>state</th>
-                                            <th>Pincode</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {content}
-                                        {similarcontent.map((similar) => (
-                                            <tr key={similar.id} >
-                                                 <td>&nbsp; <a class="text-decoration-none" href={`/pin-code/${similar.slug}`} ><strong>{similar.village}</strong> </a> </td>
-                                                 <td>&nbsp; <strong>{similar.office}</strong> </td>
-                                                <td>&nbsp; {similar.subdistrict ? similar.subdistrict : 'NA'} </td>
-                                                <td>&nbsp; {similar.district} </td>
-                                                <td>&nbsp; {similar.state} </td>
-                                                <td>&nbsp; <a class="text-decoration-none" href={`/pincode/${similar.pincode}`} >{similar.pincode}</a> </td>
+
+
+                            <div className="row">
+                                <div className="col-sm-10">
+
+                                    <Table striped bordered hover size="sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Place</th>
+                                                <th>Pincode</th>
+                                                <th>office</th>
+                                                <th>Subdistrict</th>
+                                                <th>District</th>
+                                                <th>state</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </Table>
+                                        </thead>
+                                        <tbody> {content}
+                                            {places.map((area) => (
+                                                <tr key={area.id} >
+                                                    <td>{area.village}   </td>
+                                                    <td>&nbsp; <a class="text-decoration-none"
+                                                        href={`/pincode/${area.pincode}`}
+                                                    >{area.pincode}</a>  </td>
+                                                    <td>&nbsp; <strong>{area.office}</strong> </td>
+                                                    <td>&nbsp; {area.subdistrict ? area.subdistrict : 'NA'} </td>
+                                                    <td>&nbsp; {area.district} </td>
+                                                    <td>&nbsp; {area.state} </td>
+                                                </tr>
+
+                                            ))}
+
+                                        </tbody>
+                                    </Table>
+
+                                </div>
                             </div>
-                        </div>
+                            <div className="row">&nbsp;</div>
+
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    {['warning'].map((variant) => (
+                                        <Alert key={variant} variant={variant}>
+                                            <h2>Similar locations ({keySlug[keySlug.length - 1]}) across all places  :</h2>
+                                        </Alert>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <Table striped bordered hover size="sm">
+                                        <thead>
+                                            <tr>
+
+                                                <th>Place</th>
+                                                <th>Daak Khana</th>
+                                                <th>Subdistrict</th>
+                                                <th>District</th>
+                                                <th>state</th>
+                                                <th>Pincode</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {content}
+                                            {similarcontent.map((similar) => (
+                                                <tr key={similar.id} >
+                                                    <td>&nbsp; <a class="text-decoration-none" href={`/pin-code/${similar.slug}`} ><strong>{similar.village}</strong> </a> </td>
+                                                    <td>&nbsp; <strong>{similar.office}</strong> </td>
+                                                    <td>&nbsp; {similar.subdistrict ? similar.subdistrict : 'NA'} </td>
+                                                    <td>&nbsp; {similar.district} </td>
+                                                    <td>&nbsp; {similar.state} </td>
+                                                    <td>&nbsp; <a class="text-decoration-none" href={`/pincode/${similar.pincode}`} >{similar.pincode}</a> </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </Table>
+                                </div>
+                            </div>
 
 
 
@@ -271,24 +280,24 @@ class Place extends React.Component {
                                 <h3>Q: Pin code number {places[0].pincode} is for which area?</h3>
                                 <p>Ans: Pincode {places[0].pincode} is for {places[0].village} ({places[0].office} ) . It is located in {places[0].district}.</p>
 
-                            <p>&nbsp;</p>
-                        </div>
+                                <p>&nbsp;</p>
+                            </div>
                         </div>
 
                         <div className="col-sm-2">
                             <span className="glyphicon glyphicon-globe logo slideanim"></span>
-                       
+
                         </div>
                     </div>
                     <div className="row">&nbsp;</div>
                     <div className="row">&nbsp;</div>
                 </div>
-               
+
             );
 
         }
 
-        if (isFlag && (Status === 'Error' || Status === 404)) {
+        if (isFlag && Status === 404) {
 
             return (
                 <div className="container-fluid bg-grey">
@@ -323,8 +332,3 @@ class Place extends React.Component {
 
 
 export default withParams(Place);
-
-
-
-
-

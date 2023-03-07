@@ -38,6 +38,8 @@ class VillagePanchayats extends React.Component {
                 const numRows = res.data[0].PostOffice.length;
                 this.setState({ pincodes: pincodeList, isFlag: true, count: numRows || 0 });
 
+            }).catch((err) => {
+                window.location = '/404';
             });
     }
 
