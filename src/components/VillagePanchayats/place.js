@@ -177,7 +177,7 @@ class Place extends React.Component {
                             <div className="row">
                                 <p>{places[0].village} Pin Code is {places[0].pincode}. Pin Code or Zip Code is also known as Postal Code.
                                     {places[0].village} is located in district {places[0].district},  {places[0].state} in india.
-                                    Following are the details of {places[0].village}pin code:</p></div>
+                                    Following are the details of {places[0].village} pincode:</p></div>
                             <div className="row">&nbsp;</div>
 
                             <div className="row">

@@ -11,8 +11,14 @@ function Vbreadcrum() {
   //if(params.area){
     const area = params.area ? ((params.area).replaceAll(/pincode/ig, "")).replaceAll(/-/ig, " ") :'';
   //}
+
+  const transform =  (name) => { 
+       let str = name.replaceAll(/ /ig, "-"); 
+     return   str.toLowerCase();
+ }  
   
 
+ const stLink =  transform(state);
 
   return (
     <>
@@ -24,7 +30,7 @@ function Vbreadcrum() {
           <p className="m-0 px-2">/</p>
           <p className="m-0"><a class="text-white" href={`/state/${state?state.replaceAll(/ /ig, "-"):''}-Pincode`}>{state}</a></p>
           <p className="m-0 px-2">/</p>
-          <p className="m-0"><a class="text-white" href={`/${districtLink?districtLink.replaceAll(/ /ig, "-"):''}-pincode`}>{district}</a></p>
+          <p className="m-0"><a class="text-white" href={`/${stLink}/${districtLink?districtLink.replaceAll(/ /ig, "-"):''}-pincode`}>{district}</a></p>
           <p className="m-0 px-2">/</p>
           <p className="m-0">{area}</p>
         </div>

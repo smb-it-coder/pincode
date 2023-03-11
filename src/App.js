@@ -6,7 +6,6 @@ import PostOffice from './pages/PostOffice';
 import Pincode from './pages/Pincode';
 import Village from './pages/Village';
 import Area from './pages/Area';
-//import District from './pages/District';
 import Child from './pages/Child';
 import About from './pages/About';
 import Notfound from './pages/404';

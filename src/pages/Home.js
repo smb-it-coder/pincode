@@ -30,8 +30,7 @@ const Home = () => {
             <span className="glyphicon glyphicon-globe logo slideanim"></span>
           </div>
           <div className="col-sm-8">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris venenatis quis massa sit amet feugiat. Integer ac nibh id justo laoreet rhoncus. Sed massa elit, pellentesque in hendrerit eu, varius ac lorem. Aliquam sed tincidunt nulla. Quisque nec metus lectus. Fusce magna nibh, dictum et commodo in, sollicitudin non urna. Duis vehicula quam ac velit tempus pharetra.</p>
-            </div>
+             </div>
           <div className="col-sm-2">
             <span className="glyphicon glyphicon-globe logo slideanim"></span>
           </div>
@@ -39,9 +38,21 @@ const Home = () => {
       </div>
 
       <div className="container-fluid bg-grey">
+      
         <div className="row">
           <div className="col-sm-2"><span className="glyphicon glyphicon-globe logo slideanim"></span> </div>
           <div className="col-sm-8">
+          <div className="row">
+                            <p> India is a very large country in term of population as well as area. It is very difficult to remember PIN code of any location, city or village. To make this task easy, we have created PIN code search engine very user friendly. Anyone can search Pincode by State, District, city or village as well as location address by Pin code. It does not matter where are you live in, either you are from Jammu or Kanyakumari, you can find your PIN code in just one or two clicks. </p>
+                        </div>
+                        <h2>Postal Index Number</h2>
+                        <div className="row">
+                            <p>Whenever you want to send a parcel or a gift on an occasion of festival, via Indian post or private courier like Bluedart or DTDC, you must know full address and Pincode of recipient. In order to make this process easy, Indian postal system uses 6 digits postal code to locate accurate route of recipient.
+                                Following image is showing the meaning of each digit in Indian Pin Code.</p>
+                            <p> <img alt="" src='/pincode.png' responsive  style={{height:"87%"}} /> </p>
+                            <p> As you can see, first and second digit represents for region and sub region respectively. Third digit is for shorting district and last 3 digits represent for post offices.</p>
+                            <p>&nbsp;</p>
+                        </div>
             <h3>First Two Digit of the Postal Codes belongs to:</h3>
             <TwoDigitPincodeBelongsToState />
             <div className="row"> &nbsp;&nbsp;</div>

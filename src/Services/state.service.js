@@ -6,8 +6,8 @@ export default async function getCityByState(state) {
 
   if (state) {
     try {
-      const res = await http.get(`/get-state/${state}`);
-      const ROWS = res.data.state;
+      const res = await http.get(`/districts/${state}`);
+      const ROWS = res.data.data;
       const result = {
         data: ROWS,
         count: ROWS.length?ROWS.length:0,

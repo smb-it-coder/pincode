@@ -27,24 +27,23 @@ function BodyForHome() {
             navigate(path);
         } else {
             let path = `search?q=${search}`;
-             navigate(path);
+            navigate(path);
         }
-       
+
 
     }
-   
+
 
     return (
         <Fragment>
-            
+
             <div className="container-fluid bg-grey">
                 <div className="row">
                     <div className="col-sm-2">
                         <span className="glyphicon glyphicon-globe logo slideanim"></span>
                     </div>
                     <div className="col-sm-8">
-                    <h1>Search Pin Code by Location</h1>
-                    <div className="row"><p>Postal code of any location in India is just a single click away! Give it a try by yourself!</p></div>
+                        <h1>Search Pin Code by Location</h1>
                         <div className="row">&nbsp; </div>
                         <form className="form-inline" onSubmit={handleSubmit} >
                             <div className="input-group">
